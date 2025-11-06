@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contacto · Tienda Virtual</title>
+  <style>
+    :root{--accent:#ff3b3b;--accent-2:#ffd400;--muted:#333}
+    body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;padding:24px;background:#fffaf0;color:var(--muted)}
+    .container{max-width:1100px;margin:0 auto;background:#fff;padding:20px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+    h1{margin-top:0}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{padding:16px;background:#fff3db;border-radius:10px}
+    iframe{width:100%;height:260px;border:0;border-radius:8px}
+    .info p{margin:8px 0}
+    .owner{font-weight:700}
+    a.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#e62b2b);color:#fff;text-decoration:none}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header style="padding:18px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto">
+    <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#ffd400,#ff3b3b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111">TV</div><div style="font-weight:700">Tienda Virtual</div></div>
+    <nav>
+      <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
+      <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+      <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Contacto</h1>
+    <div class="grid">
+      <div>
+        <div class="card info">
+          <h3>Información de la página</h3>
+          <p>Bienvenido a nuestra Tienda Virtual. Aquí encontrarás suplementos y productos seleccionados para tu bienestar.</p>
+          <h3>Tienda</h3>
+          <p>Dirección: {{ address }}</p>
+          <p>Horario: Lunes - Viernes, 9:00 - 18:00</p>
+
+          <h3>Propietario</h3>
+          <p class="owner">{{ owner }}</p>
+          <p>Email: <a href="mailto:{{ email }}">{{ email }}</a></p>
+
+          <h3>Contacto rápido</h3>
+          <p>Teléfono: +34 600 000 000</p>
+          <p><a class="btn" href="mailto:{{ email }}">Enviar correo</a></p>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Localización</h3>
+          <iframe src="{{ map_src }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <p style="font-size:13px;color:#666;margin-top:8px">Mapa basado en la dirección de la empresa. Actualiza la dirección en la configuración si es necesario.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

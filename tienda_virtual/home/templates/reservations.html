@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reservar masaje · Tienda Virtual</title>
+    <style>
+      :root{
+        --bg:#fff7ed; /* soft warm background */
+        --card:#fff3db;
+        --accent:#ff3b3b; /* strong red */
+        --accent-2:#ffd400; /* strong yellow */
+        --muted:#6b6b6b;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      }
+      *{box-sizing:border-box}
+      body{margin:0;background:var(--bg);color:#111}
+      .container{max-width:900px;margin:36px auto;padding:20px}
+      .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+      h1{margin:0 0 12px;color:var(--accent)}
+      p.lead{color:var(--muted);margin:0 0 18px}
+      form{display:grid;gap:12px}
+      label{font-weight:600;color:#222}
+      input[type="text"], input[type="date"], input[type="time"], select{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
+      .row{display:flex;gap:12px}
+      .row .col{flex:1}
+      .btn{background:linear-gradient(90deg,var(--accent),#cc0000);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+      .btn.secondary{background:transparent;border:2px solid var(--accent-2);color:#111}
+      .slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+      .slot{padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,var(--accent-2),#fff3b0);cursor:pointer;border:1px solid rgba(0,0,0,0.06)}
+      .message{padding:12px;border-radius:8px;background:linear-gradient(90deg,#eaffea,#f0fff0);border:1px solid #cde7cd;color:#083b08}
+      a.back{display:inline-block;margin-top:12px;color:var(--muted);text-decoration:none}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Reservar un masaje</h1>
+        <p class="lead">Elige día, hora y el tipo de masaje. Las reservas son por 60 minutos por defecto.</p>
+
+        {% if message %}
+          <div class="message">{{ message }}</div>
+          <a class="back" href="/">← Volver a la tienda</a>
+        {% else %}
+          <form method="post">
+            {% csrf_token %}
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text" placeholder="Tu nombre" />
+
+            <div class="row">
+              <div class="col">
+                <label for="date">Fecha</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+              <div class="col">
+                <label for="time">Hora</label>
+                <input id="time" name="time" type="time" required />
+              </div>
+            </div>
+
+            <label for="service">Servicio</label>
+            <select id="service" name="service">
+              <option>Masaje relajante (60 min)</option>
+              <option>Masaje deportivo (60 min)</option>
+              <option>Masaje terapéutico (60 min)</option>
+            </select>
+
+            <div style="display:flex;gap:12px;margin-top:8px">
+              <button type="submit" class="btn">Reservar</button>
+              <button type="reset" class="btn secondary">Limpiar</button>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

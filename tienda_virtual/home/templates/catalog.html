@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catálogo · Tienda Virtual</title>
+  <style>
+    :root{--accent:#ff3b3b;--muted:#333;--card:#fff3db}
+    body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;padding:24px;background:linear-gradient(180deg,#fff7ed,#fff)}
+    .container{max-width:1200px;margin:0 auto}
+    h1{text-align:center}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:20px}
+    .product{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+    .product img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+    .meta{padding-top:8px}
+    .price{font-weight:800;color:var(--accent)}
+    .loader{text-align:center;padding:16px;color:#666}
+    .empty{text-align:center;color:#666;padding:40px}
+  </style>
+</head>
+<body>
+  <header style="padding:18px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto 12px">
+    <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#ffd400,#ff3b3b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111">TV</div><div style="font-weight:700">Tienda Virtual</div></div>
+    <nav>
+      <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
+      <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+      <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Catálogo</h1>
+    <div id="grid" class="grid">
+      {% for p in products %}
+      <div class="product">
+        {% if p.image_url %}<a href="{% url 'product_detail' p.id %}"><img src="{{ p.image_url }}" alt="{{ p.nombre }}"></a>{% else %}<a href="{% url 'product_detail' p.id %}"><div style="height:180px;background:#111;border-radius:8px"></div></a>{% endif %}
+        <div class="meta">
+          <div style="font-weight:700">{{ p.nombre }}</div>
+          <div class="price">${{ p.price }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div id="loader" class="loader" data-next-page="{{ next_page|default:2 }}">Cargando más productos...</div>
+  </div>
+  <script>
+    (function(){
+      const grid = document.getElementById('grid');
+      const loader = document.getElementById('loader');
+      let nextPage = parseInt(loader && loader.dataset && loader.dataset.nextPage ? loader.dataset.nextPage : '2', 10);
+      let loading = false;
+
+      async function loadPage(){
+        if(loading) return;
+        loading = true;
+        loader.textContent = 'Cargando...';
+        try{
+          const res = await fetch(`/api/products/?page=${nextPage}`);
+          const data = await res.json();
+          if(!data.products || data.products.length === 0){
+            loader.textContent = 'No hay más productos';
+            window.removeEventListener('scroll', onScroll);
+            return;
+          }
+          data.products.forEach(p=>{
+            const el = document.createElement('div'); el.className='product';
+            el.innerHTML = `\
+              ${p.image_url?`<a href="${p.detail_url}"><img src="${p.image_url}" alt="${p.nombre}"></a>`:`<a href="${p.detail_url}"><div style="height:180px;background:#111;border-radius:8px"></div></a>`} \
+              <div class="meta"><div style="font-weight:700">${p.nombre}</div><div class="price">$${p.price}</div></div>`;
+            grid.appendChild(el);
+          });
+          if(data.has_next){ nextPage = data.next_page; loading=false; loader.textContent='Cargar más...'; }
+          else{ loader.textContent='No hay más productos'; window.removeEventListener('scroll', onScroll); }
+        }catch(err){ console.error(err); loader.textContent='Error al cargar'; loading=false; }
+      }
+
+      function onScroll(){
+        if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 800){
+          loadPage();
+        }
+      }
+
+      window.addEventListener('scroll', onScroll);
+    })();
+  </script>
+</body>
+</html>
