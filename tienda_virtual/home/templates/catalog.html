@@ -8,6 +8,36 @@
     :root{--accent:#ff3b3b;--muted:#333;--card:#fff3db}
     body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;padding:24px;background:linear-gradient(180deg,#fff7ed,#fff)}
     .container{max-width:1200px;margin:0 auto}
+    header{
+                      padding:20px 32px;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                background:transparent;
+    }.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #111;
+}
+    nav a {
+    margin-right: 12px;
+    color: #666;
+    text-decoration: none;
+}
+nav a:last-child {
+    margin-right: 0;
+}
     h1{text-align:center}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:20px}
     .product{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
@@ -24,6 +54,7 @@
     <nav>
       <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
       <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+      <a href="{% url 'reservations' %}" style="margin-right:12px;color:#666;text-decoration:none">Masajes</a>
       <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
     </nav>
   </header>

@@ -10,143 +10,73 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
-    :root {
-      --accent: #ff3b3b;
-      --accent-2: #ffd400;
-      --muted: #333;
-    }
+:root{
+    --accent:#ff3b3b;
+    --accent-2:#ffd400;
+    --muted:#333;
+}
 
-    body {
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 24px;
-      background: #fffaf0;
-      color: var(--muted);
-    }
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    margin:0;
+    padding:24px;
+    background:#fffaf0;
+    color:var(--muted);
+}
+header {
+                  padding:20px 32px;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                background:transparent;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-    }
+.container{
+    max-width:1100px;
+    margin:0 auto;
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.06);
+}
 
-    h1 {
-      margin-top: 0;
-    }
+h1{margin-top:0;}
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 20px;
-    }
+.grid{display:grid;grid-template-columns:1fr 320px;gap:20px;}
+.card{padding:16px;background:#fff3db;border-radius:10px;}
 
-    .card {
-      padding: 16px;
-      background: #fff3db;
-      border-radius: 10px;
-    }
+#map{width:100%;height:260px;border-radius:8px;}
+.info p{margin:8px 0;}
+.owner{font-weight:700;}
 
-    #map {
-      width: 100%;
-      height: 260px;
-      border-radius: 8px;
-    }
+a.btn{
+    display:inline-block;
+    padding:10px 14px;
+    border-radius:8px;
+    background:linear-gradient(90deg,var(--accent),#e62b2b);
+    color:#fff;
+    text-decoration:none;
+}
 
-    .info p {
-      margin: 8px 0;
-    }
+/* Zoom buttons map */
+.map-header{display:flex;justify-content:space-between;align-items:center;}
+.zoom-buttons{display:flex;gap:6px;}
+.zoom-btn{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    width:28px;
+    height:28px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:background 0.2s;
+}
+.zoom-btn:hover{background:#e62b2b;}
 
-    .owner {
-      font-weight: 700;
-    }
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+</style>
 
-    header {
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: transparent;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #111
-    }
-
-    a.btn {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: linear-gradient(90deg, var(--accent), #e62b2b);
-      color: #fff;
-      text-decoration: none
-    }
-
-    @media(max-width:900px) {
-      .grid {
-        grid-template-columns: 1fr
-      }
-    }
-
-    a.btn {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: linear-gradient(90deg, var(--accent), #e62b2b);
-      color: #fff;
-      text-decoration: none;
-    }
-
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Botones de zoom externos */
-    .map-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .zoom-buttons {
-      display: flex;
-      gap: 6px;
-    }
-
-    .zoom-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      width: 28px;
-      height: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .zoom-btn:hover {
-      background: #e62b2b;
-    }
-  </style>
 </head>
 
 <body>
@@ -159,7 +89,6 @@
       </div>
       <div style="font-weight:700">Natursur</div>
     </div>
-    >>>>>>> e38d4a5b24d593d7e3e2f5ffeb6335e33a9d66ee
     <nav>
       <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
       <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
