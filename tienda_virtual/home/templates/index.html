@@ -4,8 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{{ nombre_articulo|default:"Artículo" }} · Tienda Virtual</title>
-        <style>
-            :root{
+        <style>            :root{
                 /* Bright theme palette */
                 --bg:#fff7ed; /* soft warm background */
                 --card:#fff3db; /* card background */
@@ -33,10 +32,30 @@
                 justify-content:space-between;
                 background:transparent;
             }
-            .brand{display:flex;align-items:center;gap:12px}
-            .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
-            nav a{color:var(--muted-soft);text-decoration:none;margin-left:18px;font-size:14px}
-
+           .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #111;
+}
+nav a {
+    margin-right: 12px;
+    color: #666;
+    text-decoration: none;
+}
+nav a:last-child {
+    margin-right: 0;
+}
             main{display:flex;flex-direction:column;gap:48px;padding:20px 24px 48px}
             section{max-width:1200px;margin:0 auto;width:100%}
             
@@ -231,10 +250,10 @@
                 </div>
             </div>
             <nav>
-                <a href="{% url 'home' %}">Inicio</a>
-                <a href="{% url 'catalog' %}">Catálogo</a>
-                <a href="{% url 'reservations' %}">Masajes</a>
-                <a href="{% url 'contact' %}">Contacto</a>
+      <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
+      <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+      <a href="{% url 'reservations' %}" style="margin-right:12px;color:#666;text-decoration:none">Masajes</a>
+      <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
             </nav>
         </header>
 
