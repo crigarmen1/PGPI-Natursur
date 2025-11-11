@@ -14,16 +14,26 @@
     iframe{width:100%;height:260px;border:0;border-radius:8px}
     .info p{margin:8px 0}
     .owner{font-weight:700}
+    header{
+      padding:20px 32px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:transparent;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
     a.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#e62b2b);color:#fff;text-decoration:none}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <header style="padding:18px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto">
+  <header>
     <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#ffd400,#ff3b3b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111">TV</div><div style="font-weight:700">Tienda Virtual</div></div>
     <nav>
       <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
       <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+      <a href="{% url 'reservations' %}" style="margin-right:12px;color:#666;text-decoration:none">Masajes</a>
       <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
     </nav>
   </header>

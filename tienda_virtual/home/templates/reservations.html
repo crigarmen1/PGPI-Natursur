@@ -1,77 +1,257 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reservar masaje · Tienda Virtual</title>
-    <style>
-      :root{
-        --bg:#fff7ed; /* soft warm background */
-        --card:#fff3db;
-        --accent:#ff3b3b; /* strong red */
-        --accent-2:#ffd400; /* strong yellow */
-        --muted:#6b6b6b;
-        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      }
-      *{box-sizing:border-box}
-      body{margin:0;background:var(--bg);color:#111}
-      .container{max-width:900px;margin:36px auto;padding:20px}
-      .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-      h1{margin:0 0 12px;color:var(--accent)}
-      p.lead{color:var(--muted);margin:0 0 18px}
-      form{display:grid;gap:12px}
-      label{font-weight:600;color:#222}
-      input[type="text"], input[type="date"], input[type="time"], select{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
-      .row{display:flex;gap:12px}
-      .row .col{flex:1}
-      .btn{background:linear-gradient(90deg,var(--accent),#cc0000);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
-      .btn.secondary{background:transparent;border:2px solid var(--accent-2);color:#111}
-      .slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-      .slot{padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,var(--accent-2),#fff3b0);cursor:pointer;border:1px solid rgba(0,0,0,0.06)}
-      .message{padding:12px;border-radius:8px;background:linear-gradient(90deg,#eaffea,#f0fff0);border:1px solid #cde7cd;color:#083b08}
-      a.back{display:inline-block;margin-top:12px;color:var(--muted);text-decoration:none}
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="card">
-        <h1>Reservar un masaje</h1>
-        <p class="lead">Elige día, hora y el tipo de masaje. Las reservas son por 60 minutos por defecto.</p>
-
-        {% if message %}
-          <div class="message">{{ message }}</div>
-          <a class="back" href="/">← Volver a la tienda</a>
-        {% else %}
-          <form method="post">
-            {% csrf_token %}
-            <label for="name">Nombre</label>
-            <input id="name" name="name" type="text" placeholder="Tu nombre" />
-
-            <div class="row">
-              <div class="col">
-                <label for="date">Fecha</label>
-                <input id="date" name="date" type="date" required />
-              </div>
-              <div class="col">
-                <label for="time">Hora</label>
-                <input id="time" name="time" type="time" required />
-              </div>
-            </div>
-
-            <label for="service">Servicio</label>
-            <select id="service" name="service">
-              <option>Masaje relajante (60 min)</option>
-              <option>Masaje deportivo (60 min)</option>
-              <option>Masaje terapéutico (60 min)</option>
-            </select>
-
-            <div style="display:flex;gap:12px;margin-top:8px">
-              <button type="submit" class="btn">Reservar</button>
-              <button type="reset" class="btn secondary">Limpiar</button>
-            </div>
-          </form>
-        {% endif %}
-      </div>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reservar masaje · Tienda Virtual</title>
+<style>
+:root{
+  --bg:#fff7ed;
+  --card:#fff3db;
+  --accent:#ff3b3b;
+  --accent-2:#ffd400;
+  --muted:#6b6b6b;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#111}
+.container{max-width:900px;margin:36px auto;padding:20px}
+.card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+h1{margin:0 0 12px;color:var(--accent)}
+p.lead{color:var(--muted);margin:0 0 18px}
+form{display:grid;gap:12px}
+label{font-weight:600;color:#222}
+input[type="text"], select{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
+.btn{background:linear-gradient(90deg,var(--accent),#cc0000);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+.btn.secondary{background:transparent;border:2px solid var(--accent-2);color:#111}
+.message{padding:12px;border-radius:8px;background:linear-gradient(90deg,#eaffea,#f0fff0);border:1px solid #cde7cd;color:#083b08;margin-top:12px}
+header{padding:20px 32px;display:flex;align-items:center;justify-content:space-between;background:transparent;}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
+nav a{margin-right:12px;color:#666;text-decoration:none}
+nav a:last-child{margin-right:0}
+/* Calendario */
+.calendar {width:100%;text-align:center;margin-top:6px;}
+.calendar-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.calendar-grid {display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.calendar-grid .weekday {font-weight:700;padding:6px 0;}
+.day {padding:10px 0;border-radius:8px;cursor:pointer;background:#fff;border:1px solid rgba(0,0,0,0.05);}
+.day.disabled {color:#aaa;cursor:not-allowed;background:#f6f6f6;}
+.day.full {background:#ffcccc;}
+.day.partial {background:#ffe6b3;}
+.day.selected {border:2px solid var(--accent);font-weight:bold;}
+.slots {display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center;}
+.slot {padding:6px 10px;border-radius:6px;border:1px solid rgba(0,0,0,0.1);cursor:pointer;background:#fff;}
+.slot.booked {background:#eee;color:#999;cursor:not-allowed;}
+.slot.selected {background:linear-gradient(90deg,var(--accent),#cc0000);color:white;}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">TV</div>
+    <div class="name">
+      <div style="font-weight:700">Tienda Virtual</div>
+      <div style="font-size:12px;color:var(--muted)">Pequeña demo</div>
     </div>
-  </body>
+  </div>
+  <nav>
+    <a href="#" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
+    <a href="#" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
+    <a href="#" style="margin-right:12px;color:#666;text-decoration:none;font-weight:600;color:var(--accent)">Masajes</a>
+    <a href="#" style="color:#666;text-decoration:none">Contacto</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h1>Reservar un masaje</h1>
+    <p class="lead">Elige día, hora y el tipo de masaje. Las reservas son por 60 minutos por defecto.</p>
+
+    <form id="bookingForm">
+      <label for="name">Nombre</label>
+      <input id="name" name="name" type="text" placeholder="Tu nombre" required />
+
+      <label>Selecciona una fecha</label>
+      <div class="calendar" id="calendar"></div>
+
+      <div id="slotsContainer" style="display:none;">
+        <label>Selecciona hora</label>
+        <div class="slots" id="slots"></div>
+      </div>
+
+      <label for="service">Servicio</label>
+      <select id="service" name="service">
+        <option>Masaje relajante (60 min)</option>
+        <option>Masaje deportivo (60 min)</option>
+        <option>Masaje terapéutico (60 min)</option>
+      </select>
+
+      <div style="display:flex;gap:12px;margin-top:8px">
+        <button type="submit" class="btn">Reservar</button>
+        <button type="reset" class="btn secondary">Limpiar</button>
+      </div>
+    </form>
+
+    <div id="mensaje" class="message" style="display:none;">¡Reserva registrada localmente!</div>
+  </div>
+</div>
+
+<script>
+const calendarEl = document.getElementById("calendar");
+const slotsContainer = document.getElementById("slotsContainer");
+const slotsEl = document.getElementById("slots");
+const mensajeEl = document.getElementById("mensaje");
+
+let selectedDate = null;
+let selectedSlot = null;
+
+const allSlots = ["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"];
+const STORAGE_KEY = "reservas_masajes";
+let reservas = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+// Festivos de ejemplo
+const holidays = [""];
+
+let currentMonth = new Date();
+renderCalendar(currentMonth);
+
+function renderCalendar(date){
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month+1, 0);
+  const today = new Date();
+
+  calendarEl.innerHTML="";
+
+  const header = document.createElement("div");
+  header.className="calendar-header";
+  const title = document.createElement("div");
+  title.textContent=date.toLocaleString("es-ES",{month:"long", year:"numeric"});
+
+  const prevBtn=document.createElement("button");
+  prevBtn.textContent="←";
+  prevBtn.className="btn secondary";
+  prevBtn.style.padding="4px 10px";
+  prevBtn.onclick=()=>{
+    const firstOfCurrentMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    const prevMonth = new Date(year, month-1,1);
+    if(prevMonth >= firstOfCurrentMonth){
+      currentMonth=prevMonth;
+      renderCalendar(currentMonth);
+    }
+  };
+
+  const nextBtn=document.createElement("button");
+  nextBtn.textContent="→";
+  nextBtn.className="btn secondary";
+  nextBtn.style.padding="4px 10px";
+  nextBtn.onclick=()=>{
+    currentMonth=new Date(year, month+1,1);
+    renderCalendar(currentMonth);
+  };
+
+  header.appendChild(prevBtn);
+  header.appendChild(title);
+  header.appendChild(nextBtn);
+  calendarEl.appendChild(header);
+
+  // Grid
+  const grid=document.createElement("div");
+  grid.className="calendar-grid";
+
+  // Cabecera días de la semana
+  const weekdays=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+  weekdays.forEach(w=>{
+    const wd=document.createElement("div");
+    wd.className="weekday";
+    wd.textContent=w;
+    grid.appendChild(wd);
+  });
+
+  // Relleno de días vacíos
+  const startWeekday=(firstDay.getDay()+6)%7;
+  for(let i=0;i<startWeekday;i++){
+    const empty=document.createElement("div");
+    grid.appendChild(empty);
+  }
+
+  // Días del mes
+  for(let d=1; d<=lastDay.getDate(); d++){
+    const dayEl=document.createElement("div");
+    dayEl.className="day";
+    dayEl.textContent=d;
+    const dateStr=`${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const dayDate=new Date(year,month,d);
+
+    const isWeekend=dayDate.getDay()==0 || dayDate.getDay()==6;
+    const isHoliday=holidays.includes(dateStr);
+
+    if(dayDate < new Date(today.getFullYear(),today.getMonth(),today.getDate()) || isWeekend || isHoliday){
+      dayEl.classList.add("disabled");
+    } else {
+      const booked = reservas[dateStr] || [];
+      if(booked.length === allSlots.length) dayEl.classList.add("full");
+      else if(booked.length > 0) dayEl.classList.add("partial");
+      dayEl.onclick=()=>selectDate(dateStr, dayEl);
+    }
+
+    grid.appendChild(dayEl);
+  }
+
+  calendarEl.appendChild(grid);
+}
+
+function selectDate(dateStr, el){
+  document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
+  el.classList.add("selected");
+  selectedDate=dateStr;
+  renderSlots(dateStr);
+}
+
+function renderSlots(dateStr){
+  slotsContainer.style.display="block";
+  slotsEl.innerHTML="";
+  const booked=reservas[dateStr]||[];
+  allSlots.forEach(s=>{
+    const slot=document.createElement("div");
+    slot.className="slot";
+    slot.textContent=s;
+    if(booked.includes(s)) slot.classList.add("booked");
+    else{
+      slot.onclick=()=>{
+        document.querySelectorAll(".slot").forEach(sl=>sl.classList.remove("selected"));
+        slot.classList.add("selected");
+        selectedSlot=s;
+      };
+    }
+    slotsEl.appendChild(slot);
+  });
+}
+
+document.getElementById("bookingForm").addEventListener("submit",(e)=>{
+  e.preventDefault();
+  if(!selectedDate || !selectedSlot){alert("Selecciona fecha y hora."); return;}
+  const nombre=document.getElementById("name").value;
+  const servicio=document.getElementById("service").value;
+  if(!reservas[selectedDate]) reservas[selectedDate]=[];
+  reservas[selectedDate].push(selectedSlot);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(reservas));
+  mensajeEl.style.display="block";
+  mensajeEl.textContent=`¡Reserva guardada para ${nombre} (${servicio}) el ${selectedDate} a las ${selectedSlot}!`;
+  selectedDate=null; selectedSlot=null;
+  document.getElementById("bookingForm").reset();
+  slotsContainer.style.display="none";
+  renderCalendar(currentMonth);
+});
+
+document.getElementById("bookingForm").addEventListener("reset",()=>{
+  selectedDate=null; selectedSlot=null;
+  slotsContainer.style.display="none";
+  mensajeEl.style.display="none";
+  document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
+});
+</script>
+</body>
 </html>

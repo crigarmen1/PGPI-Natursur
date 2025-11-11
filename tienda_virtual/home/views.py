@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.conf import settings
+from django.http import JsonResponse
 
 from .models import Escaparate, Articulo, Reservation
 from django.core.paginator import Paginator, EmptyPage
@@ -211,3 +212,20 @@ def products_api(request):
         })
 
     return JsonResponse({"products": products, "has_next": pg.has_next(), "next_page": pg.next_page_number() if pg.has_next() else None})
+
+def reservar(request):
+    return render(request, "reservas/reservartions.html")
+
+def crear_reserva(request):
+    if request.method == "POST":
+        nombre = request.POST["name"]
+        fecha = request.POST["fecha"]
+        hora = request.POST["hora"]
+        Reservation.objects.create(nombre=nombre, fecha=fecha, hora=hora)
+        return render(request, "reservas/reservations.html", {"message": "¡Reserva creada con éxito!"})
+    return redirect("reservar")
+
+def available_slots(request):
+    date = request.GET.get("date")
+    booked = list(Reservation.objects.filter(fecha=date).values_list("hora", flat=True))
+    return JsonResponse({"booked": booked})

@@ -17,11 +17,11 @@ class Escaparate(models.Model):
 
 
 class Reservation(models.Model):
-    name = models.CharField(max_length=100)
-    date = models.DateField()
-    time = models.TimeField()
-    service = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
+    nombre = models.CharField(max_length=100)
+    fecha = models.DateField()
+    hora = models.TimeField()
+    servicio = models.CharField(max_length=100, default="Masaje relajante")
+
 
     def __str__(self):
-        return f"{self.name} - {self.date} {self.time} ({self.service})"
+        return f"{self.nombre} - {self.fecha} {self.hora}"
