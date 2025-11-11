@@ -153,16 +153,19 @@ def reservations(request):
 
 
 def contact(request):
-    """Contact page with company, store and owner info and an embedded Google Map."""
-    address = getattr(settings, "COMPANY_ADDRESS", "Calle Falsa 123, Ciudad")
-    owner = getattr(settings, "COMPANY_OWNER", "Propietario")
-    email = getattr(settings, "COMPANY_EMAIL", "owner@example.com")
-    # Build a Google Maps embed URL using the address
-    import urllib.parse
-    q = urllib.parse.quote_plus(address)
-    map_src = f"https://www.google.com/maps?q={q}&output=embed"
-    contexto = {"address": address, "owner": owner, "email": email, "map_src": map_src}
+    contexto = {
+        "address": "Av. Santa Lucía, 6241500 Alcalá de Guadaíra, Sevilla",
+        "owner": "Nombre del Propietario",
+        "email": "owner@example.com",
+        "map_data": {
+            "lat": 37.3369,   # Coordenadas aproximadas
+            "lng": -5.8367,
+            "address": "Av. Santa Lucía, 6241500 Alcalá de Guadaíra, Sevilla"
+        }
+    }
     return render(request, "contact.html", contexto)
+
+
 
 
 def product_detail(request, pk):
