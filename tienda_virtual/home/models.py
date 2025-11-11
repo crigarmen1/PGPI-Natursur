@@ -5,6 +5,7 @@ class Articulo(models.Model):
     descripcion = models.CharField(max_length=100)
     image_url = models.URLField(blank=True, null=True)
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    herbalife_url = models.URLField(blank=True, null=True, help_text="URL del producto en Herbalife, si existe.")
 
     def __str__(self):
         return self.nombre

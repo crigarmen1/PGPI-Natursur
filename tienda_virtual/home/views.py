@@ -1,11 +1,11 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .models import Escaparate, Articulo, Reservation
 from django.core.paginator import Paginator, EmptyPage
-from django.http import JsonResponse, Http404
 from django.urls import reverse
+from .utils.scraping import scrape_herbalife_product
 
 import time
 import json
@@ -168,19 +168,21 @@ def contact(request):
 
 
 
-def product_detail(request, pk):
-    """Show product detail and a link to Herbalife with the client's sale code."""
-    try:
-        product = Articulo.objects.get(pk=pk)
-    except Articulo.DoesNotExist:
-        raise Http404("Producto no encontrado")
+def product_detail(request, product_id):
+    """
+    View to handle product details. Redirects to Herbalife if the product exists there.
+    """
+    product = get_object_or_404(Articulo, id=product_id)
 
-    sale_code = getattr(settings, "HERBALIFE_SALE_CODE", "YOUR_SALE_CODE")
-    base = getattr(settings, "HERBALIFE_BASE_URL", "https://www.herbalife.com/product")
-    # Construct an example external link - adapt parameters to the actual affiliate format
-    herbalife_url = f"{base}/{product.id}?ref={sale_code}"
-    contexto = {"product": product, "herbalife_url": herbalife_url}
-    return render(request, "product_detail.html", contexto)
+    # Check if the product exists on Herbalife
+    if not product.herbalife_url:
+        product.herbalife_url = scrape_herbalife_product(product.nombre)
+        product.save()
+
+    if product.herbalife_url:
+        return redirect(product.herbalife_url)
+    else:
+        return HttpResponse("<h1>Oops, este Herbalife no vende este producto...</h1>")
 
 
 def catalog(request):

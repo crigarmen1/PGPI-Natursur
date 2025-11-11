@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto no encontrado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #fff7ed;
+            color: #333;
+        }
+        h1 {
+            color: #ff3b3b;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Oops, este Herbalife no vende este producto...</h1>
+    <p>Lo sentimos, pero el producto que estás buscando no está disponible en Herbalife.</p>
+    <a href="{% url 'home' %}">Volver al inicio</a>
+</body>
+</html>

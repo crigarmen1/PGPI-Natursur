@@ -22,7 +22,7 @@ from home import views
 urlpatterns = [
     path("", views.index, name="home"),
     path("catalog/", views.catalog, name="catalog"),
-    path("product/<int:pk>/", views.product_detail, name="product_detail"),
+    path("product/<int:product_id>/", views.product_detail, name="product_detail"),
     path("api/products/", views.products_api, name="products_api"),
     path("contact/", views.contact, name="contact"),
     path("reservations/", views.reservations, name="reservations"),
