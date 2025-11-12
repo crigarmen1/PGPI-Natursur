@@ -19,6 +19,7 @@ dist/
 
 # Django stuff:
 # Ignore the SQLite database (optional — if you don't want the DB in git)
+db.sqlite3
 media/
 staticfiles/
 
