@@ -1,265 +1,100 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{{ nombre_articulo|default:"Artículo" }} · Tienda Virtual</title>
-        <style>            :root{
-                /* Bright theme palette */
-                --bg:#fff7ed; /* soft warm background */
-                --card:#fff3db; /* card background */
-                --muted:#333333; /* primary text */
-                --muted-soft:#6b6b6b; /* secondary text */
-                --accent:#ff3b3b; /* vivid red */
-                --accent-2:#ffd400; /* warm yellow */
-                --glass: rgba(0,0,0,0.04);
-                --radius:12px;
-                font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            }
-            *{box-sizing:border-box}
-            body{
-                margin:0;
-                min-height:100vh;
-                background: linear-gradient(180deg,var(--bg) 0%, #ffffff 60%);
-                color:var(--muted);
-                -webkit-font-smoothing:antialiased;
-                -moz-osx-font-smoothing:grayscale;
-            }
-            header{
-                padding:20px 32px;
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                background:transparent;
-            }
-           .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent-2), var(--accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: #111;
-}
-nav a {
-    margin-right: 12px;
-    color: #666;
-    text-decoration: none;
-}
-nav a:last-child {
-    margin-right: 0;
-}
-            main{display:flex;flex-direction:column;gap:48px;padding:20px 24px 48px}
-            section{max-width:1200px;margin:0 auto;width:100%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio - Bienestar y Cuidado</title>
+    <!-- Carga de la fuente Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Carga de la biblioteca de iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{% static 'home/styleindex.css' %}" />
+    
+</head>
+<body>
+
+    <header>
+        <nav class="container-max-width container-padding nav-main">
             
-            /* Featured Carousel */
-            .featured-carousel{
-                background:linear-gradient(180deg,var(--card), #fffaf0);
-                padding:32px 0;
-                border-radius:var(--radius);
-                box-shadow:0 8px 30px rgba(18,18,18,0.04);
-                overflow:hidden;
-            }
-            
-            /* Buttons */
-            .btn{background:linear-gradient(90deg,var(--accent),#e62b2b);border:none;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform 0.2s}
-            .btn:hover{transform:translateY(-2px)}
-            .btn.ghost{background:transparent;border:2px solid var(--accent-2);color:var(--muted)}
-            .btn.ghost:hover{background:var(--accent-2);color:var(--muted)}
-
-            /* Product Grid */
-            .product-grid{padding:0 24px}
-            .product-grid h2{color:var(--muted);margin-bottom:32px;text-align:center}
-            .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:24px}
-            .grid-item{
-                background:var(--card);
-                border-radius:var(--radius);
-                overflow:hidden;
-                transition:transform 0.3s;
-                border:1px solid rgba(0,0,0,0.04);
-            }
-            .grid-item:hover{transform:translateY(-4px)}
-            .grid-item img{width:100%;height:220px;object-fit:cover}
-            .grid-item-info{padding:20px}
-            .grid-item-info h3{margin:0 0 12px;color:var(--muted)}
-            .grid-item-info .price{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:16px}
-            .grid-item-info .actions{display:flex;gap:8px}
-
-            /* Social Media Section */
-            .social-section{padding:0 24px}
-            .social-section h2{color:var(--muted);margin-bottom:24px;text-align:center}
-            .social-grid{
-                display:grid;
-                grid-template-columns:minmax(300px, 2fr) minmax(300px, 1fr);
-                gap:32px;
-                align-items:start;
-            }
-            
-            /* Instagram Feed */
-            .instagram-feed{
-                background:var(--card);
-                border-radius:var(--radius);
-                padding:24px;
-                box-shadow:0 8px 24px rgba(18,18,18,0.04);
-            }
-            .instagram-container{
-                display:grid;
-                grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
-                gap:12px;
-                margin:20px 0;
-            }
-            .instagram-post .caption{
-                position:absolute;
-                left:8px;
-                right:8px;
-                bottom:8px;
-                background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
-                color:#fff;
-                padding:8px 10px;
-                border-radius:6px;
-                font-size:12px;
-                max-height:48px;
-                overflow:hidden;
-            }
-            .instagram-post{
-                aspect-ratio:1;
-                border-radius:8px;
-                overflow:hidden;
-                position:relative;
-                cursor:pointer;
-                transition:transform 0.3s;
-            }
-            .instagram-post:hover{
-                transform:scale(1.05);
-            }
-            .instagram-post img{
-                width:100%;
-                height:100%;
-                object-fit:cover;
-            }
-            .instagram-link{
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-                margin-top:12px;
-            }
-            .instagram-icon{
-                transition:transform 0.3s;
-            }
-            .instagram-link:hover .instagram-icon{
-                transform:scale(1.1);
-            }
-
-            /* News Updates */
-            .news-updates{
-                background:var(--card);
-                border-radius:var(--radius);
-                padding:24px;
-                box-shadow:0 8px 24px rgba(18,18,18,0.04);
-            }
-            .news-items{
-                display:flex;
-                flex-direction:column;
-                gap:16px;
-            }
-            .news-item{
-                background:linear-gradient(135deg, var(--accent-2), var(--accent));
-                border-radius:var(--radius);
-                overflow:hidden;
-            }
-            .news-content{
-                background:rgba(255,255,255,0.95);
-                padding:24px;
-                width:100%;
-            }
-            .news-content h3{margin:0 0 8px;color:var(--accent)}
-            .news-content p{margin:0 0 16px;color:var(--muted-soft)}
-
-            @media (max-width:900px){
-                .social-grid{
-                    grid-template-columns:1fr;
-                }
-            }
-
-            footer{max-width:1100px;margin:22px auto 0;padding:24px;color:var(--muted-soft);font-size:14px}
-
-            /* Responsive */
-            @media (max-width:900px){
-                .hero{grid-template-columns:1fr;}
-                .product-card img{height:220px}
-            }
-            @media (max-width:480px){
-                header{padding:18px}
-                .brand .name{display:none}
-            }
-            /* carousel styles */
-            .carousel{display:flex;gap:12px;overflow:hidden;padding:0 24px;margin:0 -24px}
-            .carousel-track{display:flex;gap:24px;transition:transform 400ms ease}
-            .carousel-item{
-                min-width:300px;
-                position:relative;
-                background:transparent;
-                padding:0;
-                border-radius:var(--radius);
-                color:var(--muted);
-                box-shadow:0 8px 24px rgba(18,18,18,0.06);
-                border:1px solid rgba(0,0,0,0.03);
-                transition:transform 0.3s;
-                overflow:hidden;
-            }
-            .carousel-item:hover{transform:translateY(-4px)}
-            .carousel-item img{
-                width:100%;
-                height:220px;
-                object-fit:cover;
-                display:block;
-            }
-            .carousel-item .overlay{
-                position:absolute;
-                left:12px;
-                right:12px;
-                bottom:12px;
-                padding:10px 14px;
-                border-radius:10px;
-                background:linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
-                color:#fff;
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                gap:12px;
-                backdrop-filter: blur(4px);
-            }
-            .carousel-item .overlay h3{margin:0;font-size:16px;font-weight:800;color:#fff}
-
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="brand">
-                <div class="logo">TV</div>
-                <div class="name">
-                    <div style="font-weight:700">Tienda Virtual</div>
-                    <div style="font-size:12px;color:var(--muted)">Pequeña demo</div>
-                </div>
+            <!-- Logo (actualizado con tu código) -->
+            <div class="logo-container">
+                <a href="{% url 'home' %}">
+                    <!-- Asumiendo que tienes 'django.templatetags.static' cargado en tu plantilla -->
+                    {% load static %}
+                    <img src="{% static 'home/images/logo.png' %}" alt="My Site Logo" class="logo-img">
+                </a>
             </div>
-            <nav>
-      <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
-      <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
-      <a href="{% url 'reservations' %}" style="margin-right:12px;color:#666;text-decoration:none">Masajes</a>
-      <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
-            </nav>
-        </header>
+            
+            <!-- Enlaces de Navegación (actualizados a text-xl) -->
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link">Inicio</a>
+                <a href="{% url 'reservations' %}" class="nav-link">Reservar Cita</a>
+                <a href="{% url 'catalog' %}" class="nav-link">Catálogo</a>
+                <a href="{% url 'contact' %}" target="_blank" class="nav-link">Contact</a>
+            </div>
 
-        <main>
-            <!-- Featured Products Carousel -->
-            <section class="featured-carousel">
+    </header>
+
+    <main>
+        <!-- 
+          SECCIÓN HERO (HÉROE)
+        -->
+        <section class="hero-section">
+            
+            <!-- 2. Fondo de Imagen (Capa inferior) -->
+            <div class="hero-bg-image">
+                <img src="{% static 'home/images/massage.jpg' %}" alt="Fondo de masaje" class="">
+            </div>
+
+            <!-- 3. Superposición de Color (Capa intermedia) -->
+            <!-- 'bg-teal-tint' es una clase personalizada, así que se mantiene -->
+            <div class="hero-overlay bg-teal-tint"></div>
+
+            <!-- 
+              4. Contenido (Capa superior)
+            -->
+            <div class="container-max-width container-padding hero-content">
+                <!-- Texto del Hero -->
+                <div class="hero-text">
+                    <h1 class="">
+                        Bienestar y Cuidado a tu Alcance
+                    </h1>
+                    <p class="">
+                        Descubre nuestra selección exclusiva de productos y agenda tu próximo momento de bienestar con nosotros.
+                    </p>
+                    <div class="hero-buttons">
+                        <!-- 'bg-primary-accent' es una clase personalizada, se mantiene -->
+                        <a href="{% url 'reservations' %}" class="btn btn-primary bg-primary-accent">
+                            Reservar Cita
+                        </a>
+                        <a href="{% url 'catalog' %}" class="btn btn-secondary">
+                            Ver Catálogo
+                        </a>
+                    </div>
+                </div>
+               
+            </div>
+        </section>
+
+        <!-- 
+          --- MODIFICADO ---
+          1. Se añade una <section> exterior con el fondo suave.
+          2. El .featured-carousel es ahora un <div> interior con max-width.
+        -->
+        <section class="carousel-section-wrapper">
+
+            <div class="container-max-width container-padding section-header"> 
+                <h2 class="section-title">Descubre nuestros productos</h2>
+                <a href="{% url 'catalog' %}" class="btn-link">
+                    <span>Ver catálogo completo</span>
+                    <i data-lucide="arrow-right" class="btn-link-icon"></i>
+                </a>
+            </div>
+
+            <div class="featured-carousel">
                 <div class="carousel" id="carousel">
                     <div class="carousel-track" id="track">
                         {% for item in articulos %}
@@ -276,103 +111,73 @@ nav a:last-child {
                         {% endfor %}
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Product Grid -->
-            <section class="product-grid">
-                <h2>Nuestros Productos</h2>
-                <div class="grid">
-                    {% for item in articulos %}
-                    <div class="grid-item">
-                        <a href="{% url 'product_detail' item.id %}" style="text-decoration: none;">
-                            {% if item.image_url %}
-                                <img src="{{ item.image_url }}" alt="{{ item.nombre }}">
-                            {% else %}
-                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='260'><rect fill='%23260b0b' width='100%' height='100%'/><text x='50%' y='50%' fill='%23ffd400' font-size='20' font-family='Arial' dominant-baseline='middle' text-anchor='middle'>{{ item.nombre }}</text></svg>" alt="{{ item.nombre }}">
-                            {% endif %}
-                            <div class="grid-item-info">
-                                <h3 style="text-decoration: none;">{{ item.nombre }}</h3>
-                                <div class="price" style="text-decoration: none;">{{ item.price|floatformat:2 }} €</div>
-                            </div>
+        </section>
+
+        <section class="social-follow-section">
+            <div class="container-max-width container-padding social-follow-content">
+                
+                <div class="social-image-wrapper">
+                    <img src="{% static 'home/images/12001035.jpg' %}" alt="Imagen de perfil" class="social-image-circular">
+                </div>
+
+                <div class="social-text-wrapper">
+                    <h2 class="section-title">Conecta con Nosotros</h2>
+                    <p class="section-subtitle" style="max-width: 100%;"> Mantente al día con nuestras novedades, consejos y promociones exclusivas siguiéndonos en nuestras redes sociales.
+                    </p>
+                    
+                    <div class="social-icons-list">
+                        <a href="https://www.instagram.com/yosoyescalona" class="social-icon-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                        
+                        <a href="https://www.youtube.com/@natursur" class="social-icon-link" aria-label="Youtube" target="_blank" rel="noopener noreferrer">
+                            <i data-lucide="youtube"></i>
+                        </a>
+                        
+                        <a href="https://www.facebook.com/natursur" class="social-icon-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                            <i data-lucide="facebook"></i>
                         </a>
                     </div>
-                    {% endfor %}
                 </div>
-            </section>
 
-            <!-- Social Media Section -->
-            <section class="social-section">
-                <div class="social-grid">
-                    <!-- Instagram Feed -->
-                    <div class="instagram-feed">
-                            <div class="instagram-embed">
-                                <div class="instagram-header">
-                                    {% if instagram_profile and instagram_profile.username %}
-                                    <a href="https://instagram.com/{{ instagram_profile.username }}" target="_blank" class="instagram-link btn ghost">
-                                        @{{ instagram_profile.username }}
-                                    {% else %}
-                                    <a href="https://instagram.com/fernandoescalona78" target="_blank" class="instagram-link btn ghost">
-                                        @fernandoescalona78
-                                    {% endif %}
-                                        <svg class="instagram-icon" viewBox="0 0 24 24" width="24" height="24">
-                                            <path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="instagram-container" id="instagram-feed">
-                                    {% if instagram_posts %}
-                                        {% for post in instagram_posts %}
-                                            <a href="{{ post.permalink }}" target="_blank" class="instagram-post" aria-label="Instagram post">
-                                                {% if post.media_url %}
-                                                    <img src="{{ post.media_url }}" alt="{{ post.caption|default:'Instagram image' }}" loading="lazy">
-                                                {% else %}
-                                                    <div style="background:#111;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent-2)">
-                                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                                    </div>
-                                                {% endif %}
-                                                {% if post.caption %}
-                                                    <div class="caption">{{ post.caption|truncatechars:100 }}</div>
-                                                {% endif %}
-                                            </a>
-                                        {% endfor %}
-                                    {% else %}
-                                        <!-- Instagram feed will be loaded here (client-side fallback) -->
-                                    {% endif %}
-                                </div>
-                            </div>
-                    </div>
-                    <!-- News Updates -->
-                    <div class="news-updates">
-                        <h2>Novedades</h2>
-                        <div class="news-items">
-                            <article class="news-item">
-                                <div class="news-content">
-                                    <h3>Nuevos Productos</h3>
-                                    <p>Descubre nuestras últimas incorporaciones para tu bienestar.</p>
-                                    <a href="#" class="btn ghost">Leer más</a>
-                                </div>
-                            </article>
-                            <article class="news-item">
-                                <div class="news-content">
-                                    <h3>Ofertas Especiales</h3>
-                                    <p>No te pierdas nuestras promociones del mes.</p>
-                                    <a href="#" class="btn ghost">Ver ofertas</a>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            </div>
+        </section>
         </main>
 
-        <footer>
-            <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center">
-                <div>© {{ now|date:"Y" }} Tienda Virtual</div>
-                <div style="color:var(--muted)">Hecho con ♥ para la práctica</div>
-            </div>
-        </footer>
-        <script>
-            (function(){
+
+
+    </main>
+
+    <footer>
+        <div class="container-max-width container-padding footer-content">
+            <p>&copy; {% now "Y" %} Tu Empresa. Todos los derechos reservados.</p>
+        
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Reemplazo de Iconos Lucide ---
+            lucide.createIcons();
+
+            // --- Funcionalidad del Menú Móvil ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+        });
+        
+        // --- Script del Carrusel (Sin cambios) ---
+        (function(){
                 const track = document.getElementById('track');
                 if(!track) return;
                 let items = Array.from(track.children);
