@@ -19,21 +19,19 @@
     <header>
         <nav class="container-max-width container-padding nav-main">
             
-            <!-- Logo (actualizado con tu código) -->
+           <!-- Logo como texto -->
             <div class="logo-container">
-                <a href="{% url 'home' %}">
-                    <!-- Asumiendo que tienes 'django.templatetags.static' cargado en tu plantilla -->
-                    {% load static %}
-                    <img src="{% static 'home/images/logo.png' %}" alt="My Site Logo" class="logo-img">
+                <a href="{% url 'home' %}" class="logo-text">
+                    NATURSUR
                 </a>
             </div>
             
             <!-- Enlaces de Navegación (actualizados a text-xl) -->
             <div class="nav-links">
                 <a href="{% url 'home' %}" class="nav-link">Inicio</a>
-                <a href="{% url 'reservations' %}" class="nav-link">Reservar Cita</a>
                 <a href="{% url 'catalog' %}" class="nav-link">Catálogo</a>
-                <a href="{% url 'contact' %}" target="_blank" class="nav-link">Contact</a>
+                <a href="{% url 'reservations' %}" class="nav-link">Masajes</a>
+                <a href="{% url 'contact' %}" target="_blank" class="nav-link">Contacto</a>
             </div>
 
     </header>
@@ -62,15 +60,15 @@
                     <h1 class="">
                         Bienestar y Cuidado a tu Alcance
                     </h1>
-                    <p class="">
+                    <p class="" style="color: #e6e6e6;">
                         Descubre nuestra selección exclusiva de productos y agenda tu próximo momento de bienestar con nosotros.
                     </p>
                     <div class="hero-buttons">
                         <!-- 'bg-primary-accent' es una clase personalizada, se mantiene -->
-                        <a href="{% url 'reservations' %}" class="btn btn-primary bg-primary-accent">
+                        <a href="{% url 'reservations' %}" class="btn btn-primary" style="color: #000000;">
                             Reservar Cita
                         </a>
-                        <a href="{% url 'catalog' %}" class="btn btn-secondary">
+                        <a href="{% url 'catalog' %}" class="btn btn-secondary" style="color: #000000;">
                             Ver Catálogo
                         </a>
                     </div>
@@ -88,7 +86,7 @@
 
             <div class="container-max-width container-padding section-header"> 
                 <h2 class="section-title">Descubre nuestros productos</h2>
-                <a href="{% url 'catalog' %}" class="btn-link">
+                <a href="{% url 'catalog' %}" class="btn-link" style="color:  #ffc802">
                     <span>Ver catálogo completo</span>
                     <i data-lucide="arrow-right" class="btn-link-icon"></i>
                 </a>
