@@ -84,10 +84,13 @@ body {
 
 /* --- NUEVO: Wrapper para la sección del carrusel --- */
 .carousel-section-wrapper {
-    background-color: #fff; /* .bg-soft-background */
-    padding-top: 4rem;    /* 64px, equivalente a py-16 */
-    padding-bottom: 4rem; /* 64px, equivalente a py-16 */
-    /* Se añaden paddings laterales para el responsive móvil */
+    background-image: var(--carousel-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 @media (min-width: 640px) {
     .carousel-section-wrapper {
@@ -126,47 +129,62 @@ body {
     }
 }
 
-/* Header y Navegación */
+/* Header y Navegación — MÁS FINO */
 header {
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
-    background-color: #fff; /* Asegura fondo blanco */
+    background-color: #171717;
 }
+
+/* Reducimos padding del nav */
 .nav-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1.5rem; /* py-6 */
-    padding-bottom: 1.5rem; /* py-6 */
+    padding-top: 1rem;  /* antes 1.5rem */
+    padding-bottom: 1rem;
 }
-.logo-container {
-    flex-shrink: 0;
-}
+
+
+/* Logo más pequeño y fino */
 .logo-img {
-    height: 6.25rem; /* h-25 */
+    height: 5.5rem; /* antes 6.25rem */
     width: auto;
 }
+.logo-text {
+    font-weight: 800;      /* negrita */
+    font-size: 1.75rem;    /* tamaño del texto */
+    color: rgb(255, 255, 255);          /* color blanco */
+    text-decoration: none; /* quitar subrayado */
+    line-height: 1;        /* no empuja la barra */
+    display: flex;
+    align-items: center;
+}
+/* Nav links más discretos */
 .nav-links {
-    display: none; /* hidden */
+    display: none;
     align-items: center;
 }
 .nav-links > * + * {
-    margin-left: 1.5rem; /* space-x-6 */
+    margin-left: 1rem; /* antes 1.5rem */
 }
-@media (min-width: 768px) { /* md: */
+
+@media (min-width: 768px) {
     .nav-links {
         display: flex;
     }
 }
+
+/* Texto más fino y pequeño */
 .nav-link {
-    font-weight: 500; /* font-medium */
-    color: #4b5563; /* text-gray-600 */
-    font-size: 1.5rem; /* text-2xl */
+    font-weight: 500;
+    color: #e5e5e5;
+    font-size: 1rem; /* antes 1.5rem */
     text-decoration: none;
     transition: color 0.2s;
 }
 .nav-link:hover {
-    color: #111827; /* hover:text-gray-900 */
+    color: #ffffff;
 }
+
 
 /* Sección Hero */
 .hero-section {
@@ -174,18 +192,29 @@ header {
 }
 .hero-bg-image {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0; /* inset-0 */
+    top: 0;
+    right: 0; /* se mantiene a la derecha */
+    width: 50%; /* mitad derecha */
+    height: 100%;
+    overflow: hidden;
 }
+
 .hero-bg-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .hero-overlay {
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0; /* inset-0 */
-    opacity: 0.8; /* opacity-80 */
+    top: 0;
+    left: 0; /* pegado a la izquierda */
+    width: 50%; /* mitad izquierda */
+    height: 100%;
+    background: #11454a; /* el color que quieras */
+    opacity: 1; /* evita transparencias */
 }
+
 .hero-content {
     position: relative; /* relative */
     display: grid;
@@ -202,6 +231,7 @@ header {
 
 .hero-text {
     text-align: center; /* text-center */
+    color: #ffffff; 
 }
 @media (min-width: 768px) { /* md: */
     .hero-text {
@@ -210,15 +240,17 @@ header {
 }
 .hero-text h1 {
     font-size: 2.25rem; /* text-4xl */
-    font-weight: 800; /* font-extrabold */
-    color: #111827; /* text-gray-900 */
+    font-weight: 700; /* font-extrabold */
+    color: #ffffff; /* text-gray-900 */
     line-height: 1.25; /* leading-tight */
+    justify-content: flex-start; 
 }
 .hero-text p {
     margin-top: 1.5rem; /* mt-6 */
     font-size: 1.125rem; /* text-lg */
     line-height: 1.75rem;
-    color: #111827; /* text-gray-900 */
+    color: #ffffff; /* text-gray-900 */
+    justify-content: flex-start; 
 }
 @media (min-width: 768px) { /* md: */
     .hero-text h1 {
@@ -233,6 +265,8 @@ header {
     }
 }
 
+
+
 /* Botones del Hero */
 .hero-buttons {
     margin-top: 2.5rem; /* mt-10 */
@@ -240,10 +274,12 @@ header {
     flex-direction: column; /* flex-col */
     justify-content: center; /* justify-center */
     gap: 1rem; /* gap-4 */
+    align-items: center;    
 }
 @media (min-width: 640px) { /* sm: */
     .hero-buttons {
         flex-direction: row; /* sm:flex-row */
+
     }
 }
 @media (min-width: 768px) { /* md: */
@@ -263,20 +299,21 @@ header {
     text-align: center;
 }
 .btn-primary {
-    color: #fff; /* text-white */
+    background-color: #ffc802;
+    color: #ffffff; /* text-white */
     transition: opacity 0.2s; /* transition-opacity */
 }
 .btn-primary:hover {
-    opacity: 0.9; /* hover:opacity-90 */
+    background-color: #f9fafb4a; /* hover:opacity-90 */
 }
 .btn-secondary {
     background-color: #fff; /* bg-white */
-    color: #1f2937; /* text-gray-800 */
+    color: #ffffff; /* text-gray-800 */
     border: 1px solid #e5e7eb; /* border border-gray-200 */
     transition: background-color 0.2s; /* transition-colors */
 }
 .btn-secondary:hover {
-    background-color: #f9fafb; /* hover:bg-gray-50 */
+    background-color: #f9fafb4a; /* hover:bg-gray-50 */
 }
 
 
@@ -284,7 +321,7 @@ header {
 
 /* Footer */
 footer {
-    background-color: #1f2937; /* bg-gray-800 */
+    background-color:#11454a; /* bg-gray-800 */
     color: #fff; /* text-white */
 }
 .footer-content {
