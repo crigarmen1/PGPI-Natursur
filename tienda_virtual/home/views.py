@@ -133,23 +133,22 @@ def reservations(request):
     """Reservation page for massages. Saves reservation to database."""
     message = None
     if request.method == "POST":
-        cliente = request.POST.get("name")
+        nombre = request.POST.get("name")
         fecha = request.POST.get("date")
         hora = request.POST.get("time")
         servicio = request.POST.get("service")
-        # Basic save to DB
         try:
             Reservation.objects.create(
-                name=cliente or "Cliente",
-                date=fecha,
-                time=hora,
-                service=servicio or "Masaje"
+                nombre=nombre or "Cliente",
+                fecha=fecha,
+                hora=hora,
+                servicio=servicio or "Masaje relajante"
             )
-            cliente_display = cliente if cliente else "Cliente"
-            message = f"Reserva confirmada para {cliente_display} - {servicio} el {fecha} a las {hora}"
+            message = f"Reserva confirmada para {nombre} - {servicio} el {fecha} a las {hora}"
         except Exception as e:
             message = f"No se pudo crear la reserva: {e}"
     return render(request, "reservations.html", {"message": message})
+
 
 
 def contact(request):
@@ -227,7 +226,7 @@ def crear_reserva(request):
         fecha = request.POST["fecha"]
         hora = request.POST["hora"]
         Reservation.objects.create(nombre=nombre, fecha=fecha, hora=hora)
-        return render(request, "reservas/reservations.html", {"message": "¡Reserva creada con éxito!"})
+        return render(request, "reservations.html", {"message": "¡Reserva creada con éxito!"})
     return redirect("reservar")
 
 def available_slots(request):
