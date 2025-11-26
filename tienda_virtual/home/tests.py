@@ -108,7 +108,6 @@ class ProductDetailTests(TestCase):
 
 class ReservationViewInterfaceTests(TestCase):
 
-
     def setUp(self):
         self.client = Client()
 
@@ -117,19 +116,20 @@ class ReservationViewInterfaceTests(TestCase):
         response = self.client.get(reverse("reservations"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Reservar un masaje")
+
     def test_reservation_post_creates_object(self):
         """Verificar que al enviar la reserva se crea un objeto en DB."""
         data = {
             "name": "Carlos",
-            "date": "2025-01-02",
-            "time": "15:00",
+            "fecha": "2025-01-02",   # ← Cambiado de 'date' a 'fecha'
+            "hora": "15:00",         # ← Cambiado de 'time' a 'hora'
             "service": "Masaje"
         }
         response = self.client.post(reverse("reservations"), data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Reservation.objects.count(), 1)
         r = Reservation.objects.first()
-        self.assertEqual(r.nombre, "Carlos")  # si tu modelo usa 'nombre', ajusta create() en view
+        self.assertEqual(r.nombre, "Carlos")
         self.assertEqual(str(r.fecha), "2025-01-02")
         self.assertEqual(str(r.hora), "15:00:00")
         self.assertEqual(r.servicio, "Masaje")
