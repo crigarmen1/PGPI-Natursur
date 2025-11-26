@@ -195,6 +195,7 @@ def get_reservations(request):
     return JsonResponse(reservas_dict)
 
 
+
 def contact(request):
     contexto = {
         "address": "Av. Santa Lucía, 6241500 Alcalá de Guadaíra, Sevilla",
@@ -238,10 +239,17 @@ def catalog(request):
 
 
 def products_api(request):
-    """API endpoint returning JSON list of products for infinite scroll."""
+    """API endpoint returning JSON list of products for infinite scroll, supports search."""
     page = int(request.GET.get('page', '1'))
     per_page = int(request.GET.get('per_page', '12'))
-    qs = Articulo.objects.all().order_by('id')
+    search = request.GET.get('search', '').strip()  # Tomamos la búsqueda
+
+    # Filtrado: si hay texto en search, filtramos por nombre que contenga la cadena (case-insensitive)
+    if search:
+        qs = Articulo.objects.filter(nombre__icontains=search).order_by('id')
+    else:
+        qs = Articulo.objects.all().order_by('id')
+
     paginator = Paginator(qs, per_page)
     try:
         pg = paginator.get_page(page)
@@ -259,7 +267,12 @@ def products_api(request):
             "detail_url": reverse('product_detail', args=[p.id]),
         })
 
-    return JsonResponse({"products": products, "has_next": pg.has_next(), "next_page": pg.next_page_number() if pg.has_next() else None})
+    return JsonResponse({
+        "products": products,
+        "has_next": pg.has_next(),
+        "next_page": pg.next_page_number() if pg.has_next() else None
+    })
+
 
 def reservar(request):
     return render(request, "reservas/reservartions.html")
@@ -270,7 +283,7 @@ def crear_reserva(request):
         fecha = request.POST["fecha"]
         hora = request.POST["hora"]
         Reservation.objects.create(nombre=nombre, fecha=fecha, hora=hora)
-        return render(request, "reservas/reservations.html", {"message": "¡Reserva creada con éxito!"})
+        return render(request, "reservations.html", {"message": "¡Reserva creada con éxito!"})
     return redirect("reservar")
 
 def available_slots(request):
