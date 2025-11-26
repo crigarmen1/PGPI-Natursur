@@ -27,4 +27,6 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("reservations/", views.reservations, name="reservations"),
     path("admin/", admin.site.urls),
+    path("api/reservations/", views.get_reservations, name="get_reservations"),
+
 ]
