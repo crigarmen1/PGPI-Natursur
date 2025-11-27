@@ -47,7 +47,7 @@ body {
 .carousel-item{
     min-width:300px;
     position:relative;
-    background:transparent;
+    background:#ffffff;
     padding:0;
     border-radius:var(--radius);
     color:var(--muted);
