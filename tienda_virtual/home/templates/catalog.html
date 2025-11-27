@@ -1,43 +1,41 @@
 <!doctype html>
+
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo · Tienda Virtual</title>
   <style>
-    :root{--accent:#ff3b3b;--muted:#333;--card:#fff3db}
-    body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;padding:24px;background:linear-gradient(180deg,#fff7ed,#fff)}
-    .container{max-width:1200px;margin:0 auto}
+    :root{--accent:#ffd400;--muted:#333;--card:#ffffff}
+    body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;padding-top:64px;padding-left:0;padding-right:0;background-color:#f0f9fa}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
     header{
-                      padding:20px 32px;
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                background:transparent;
-    }.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent-2), var(--accent));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: #111;
-}
-    nav a {
-    margin-right: 12px;
-    color: #666;
-    text-decoration: none;
-}
-nav a:last-child {
-    margin-right: 0;
-}
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:1000;
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:#000000;
+      box-sizing:border-box;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #111;
+    }
+    nav a { margin-right: 12px; color: #666; text-decoration: none; }
+    nav a:last-child { margin-right: 0; }
+    .header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+    .search-form { display:flex; align-items:center; }
+    .search-form input[type="text"]{
+      padding:6px 12px; border-radius:6px; border:1px solid #ccc; margin-left:12px;
+    }
     h1{text-align:center}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:20px}
     .product{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
@@ -49,14 +47,23 @@ nav a:last-child {
   </style>
 </head>
 <body>
-  <header style="padding:18px 24px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto 12px">
-    <div style="display:flex;gap:12px;align-items:center"><div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#ffd400,#ff3b3b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111">TV</div><div style="font-weight:700">Tienda Virtual</div></div>
-    <nav>
-      <a href="{% url 'home' %}" style="margin-right:12px;color:#666;text-decoration:none">Inicio</a>
-      <a href="{% url 'catalog' %}" style="margin-right:12px;color:#666;text-decoration:none">Catálogo</a>
-      <a href="{% url 'reservations' %}" style="margin-right:12px;color:#666;text-decoration:none">Masajes</a>
-      <a href="{% url 'contact' %}" style="color:#666;text-decoration:none">Contacto</a>
-    </nav>
+    <header>
+    <div class="brand">
+      <div class="name">
+        <div style="font-weight: 800; font-size: 1.75rem; color: rgb(255, 255, 255); line-height: 1; display: flex; align-items: center">NATURSUR</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <nav>
+          <a href="{% url 'home' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Inicio</a>
+          <a href="{% url 'catalog' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Catálogo</a>
+          <a href="{% url 'reservations' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Masajes</a>
+          <a href="{% url 'contact' %}" style="color:#e5e5e5;text-decoration:none">Contacto</a>
+      </nav>
+      <form class="search-form" id="searchForm" onsubmit="return false;">
+        <input type="text" id="searchInput" placeholder="Buscar producto..." autocomplete="off" />
+      </form>
+    </div>
   </header>
 
   <div class="container">
@@ -64,55 +71,166 @@ nav a:last-child {
     <div id="grid" class="grid">
       {% for p in products %}
       <div class="product">
-        {% if p.image_url %}<a href="{% url 'product_detail' p.id %}"><img src="{{ p.image_url }}" alt="{{ p.nombre }}"></a>{% else %}<a href="{% url 'product_detail' p.id %}"><div style="height:180px;background:#111;border-radius:8px"></div></a>{% endif %}
+        {% if p.image_url %}
+          <a href="{% url 'product_detail' p.id %}"><img src="{{ p.image_url }}" alt="{{ p.nombre }}"></a>
+        {% else %}
+          <a href="{% url 'product_detail' p.id %}"><div style="height:180px;background:#111;border-radius:8px"></div></a>
+        {% endif %}
         <div class="meta">
           <div style="font-weight:700">{{ p.nombre }}</div>
-          <div class="price">${{ p.price }}</div>
+          <div class="price">{{ p.price }}€</div>
         </div>
       </div>
       {% endfor %}
     </div>
     <div id="loader" class="loader" data-next-page="{{ next_page|default:2 }}">Cargando más productos...</div>
   </div>
+
   <script>
     (function(){
       const grid = document.getElementById('grid');
       const loader = document.getElementById('loader');
+      const searchInput = document.getElementById('searchInput');
+
+      // estado
       let nextPage = parseInt(loader && loader.dataset && loader.dataset.nextPage ? loader.dataset.nextPage : '2', 10);
       let loading = false;
+      let activeSearch = ''; // texto actual de búsqueda
+      let scrollHandlerAttached = false;
 
-      async function loadPage(){
-        if(loading) return;
-        loading = true;
-        loader.textContent = 'Cargando...';
-        try{
-          const res = await fetch(`/api/products/?page=${nextPage}`);
-          const data = await res.json();
-          if(!data.products || data.products.length === 0){
-            loader.textContent = 'No hay más productos';
-            window.removeEventListener('scroll', onScroll);
-            return;
-          }
-          data.products.forEach(p=>{
-            const el = document.createElement('div'); el.className='product';
-            el.innerHTML = `\
-              ${p.image_url?`<a href="${p.detail_url}"><img src="${p.image_url}" alt="${p.nombre}"></a>`:`<a href="${p.detail_url}"><div style="height:180px;background:#111;border-radius:8px"></div></a>`} \
-              <div class="meta"><div style="font-weight:700">${p.nombre}</div><div class="price">$${p.price}</div></div>`;
-            grid.appendChild(el);
-          });
-          if(data.has_next){ nextPage = data.next_page; loading=false; loader.textContent='Cargar más...'; }
-          else{ loader.textContent='No hay más productos'; window.removeEventListener('scroll', onScroll); }
-        }catch(err){ console.error(err); loader.textContent='Error al cargar'; loading=false; }
+      // Debounce helper
+      function debounce(fn, wait){
+        let t = null;
+        const wrapped = function(...args){
+          clearTimeout(t);
+          t = setTimeout(()=>fn.apply(this, args), wait);
+        };
+        wrapped.cancel = () => { clearTimeout(t); };
+        return wrapped;
       }
 
-      function onScroll(){
-        if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 800){
-          loadPage();
+      // Carga una página (usa la variable nextPage). Si replaceGrid=true, vacía el grid antes.
+      async function loadPage(search = '', replaceGrid = false){
+        // si nextPage es null/undefined, no hay más páginas
+        if(loading) return;
+        if(nextPage === null) return;
+
+        loading = true;
+        loader.textContent = 'Cargando...';
+
+        try{
+          const res = await fetch(`/api/products/?page=${nextPage}&search=${encodeURIComponent(search)}`);
+          if(!res.ok){
+            throw new Error('error en la respuesta del servidor');
+          }
+          const data = await res.json();
+
+          // Si pedimos reemplazar, vaciamos antes de insertar
+          if(replaceGrid){
+            grid.innerHTML = '';
+          }
+
+          // Si no vienen productos y es la primera página -> mostrar mensaje
+          if(!data.products || data.products.length === 0){
+            if(nextPage === 1){
+              grid.innerHTML = '<div class="empty">No se encontraron productos.</div>';
+            }
+            loader.textContent = 'No hay más productos';
+            nextPage = null;
+            detachScroll(); // no más scroll
+            loading = false;
+            return;
+          }
+
+          // añadir productos recibidos
+          data.products.forEach(p=>{
+            const el = document.createElement('div');
+            el.className = 'product';
+            el.innerHTML = `\
+              ${p.image_url?`<a href="${p.detail_url}"><img src="${p.image_url}" alt="${p.nombre}"></a>`:`<a href="${p.detail_url}"><div style="height:180px;background:#111;border-radius:8px"></div></a>`} \
+              <div class="meta"><div style="font-weight:700">${p.nombre}</div><div class="price">${p.price}€</div></div>`;
+            grid.appendChild(el);
+          });
+
+          // actualizar nextPage según respuesta
+          if(data.has_next && data.next_page){
+            nextPage = data.next_page;
+            loader.textContent = 'Cargar más...';
+            attachScroll(); // aseguramos que el scroll esté activo
+          } else {
+            nextPage = null;
+            loader.textContent = 'No hay más productos';
+            detachScroll();
+          }
+
+        } catch(err){
+          console.error(err);
+          loader.textContent = 'Error al cargar';
+        } finally {
+          loading = false;
         }
       }
 
-      window.addEventListener('scroll', onScroll);
+      // Scroll infinito: carga siguiente página usando el search actual
+      function onScroll(){
+        if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 800){
+          loadPage(activeSearch, false);
+        }
+      }
+
+      function attachScroll(){
+        if(!scrollHandlerAttached){
+          window.addEventListener('scroll', onScroll);
+          scrollHandlerAttached = true;
+        }
+      }
+      function detachScroll(){
+        if(scrollHandlerAttached){
+          window.removeEventListener('scroll', onScroll);
+          scrollHandlerAttached = false;
+        }
+      }
+
+      // Manejo de búsqueda con debounce
+      const handleSearchInput = debounce(function(e){
+        const q = (e.target.value || '').trim();
+        // si cambia la búsqueda, reseteamos paginación y cargamos la primera página filtrada
+        if(q !== activeSearch){
+          activeSearch = q;
+          nextPage = 1;         // empezar desde la página 1 para la nueva búsqueda
+          // mostramos "Cargando..." mientras la petición ocurre
+          grid.innerHTML = '';  // vaciamos resultados previos (mejor UX)
+          // re-enable scroll handling optimistamente
+          attachScroll();
+          // loadPage con replaceGrid=true (ya vaciado el grid, pero parámetro para claridad)
+          loadPage(activeSearch, true);
+        }
+      }, 250); // 250ms debounce
+
+      // Evento input
+      searchInput.addEventListener('input', handleSearchInput);
+
+      // Comportamiento al presionar Esc: limpia búsqueda (opcional, buen atajo)
+      searchInput.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){
+          searchInput.value = '';
+          handleSearchInput.cancel && handleSearchInput.cancel();
+          const ev = new Event('input', { bubbles: true });
+          searchInput.dispatchEvent(ev);
+        }
+      });
+
+      // Inicial: attach scroll y dejar los productos iniciales (server-side rendered)
+      attachScroll();
+      // si el usuario ya tenía algo escrito (ej: valor persistente), lanzamos búsqueda inicial
+      if(searchInput.value && searchInput.value.trim() !== ''){
+        activeSearch = searchInput.value.trim();
+        nextPage = 1;
+        grid.innerHTML = '';
+        loadPage(activeSearch, true);
+      }
     })();
   </script>
+
 </body>
 </html>

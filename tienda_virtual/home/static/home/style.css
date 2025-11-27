@@ -1,0 +1,582 @@
+:root{
+    /* Bright theme palette */
+    --bg:#fff7ed; /* soft warm background */
+    --card:#fff3db; /* card background */
+    --muted:#333333; /* primary text */
+    --muted-soft:#6b6b6b; /* secondary text */
+    --accent:#ff3b3b; /* vivid red */
+    --accent-2:#ffd400; /* warm yellow */
+    --glass: rgba(0,0,0,0.04);
+    --radius:12px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{
+    margin:0;
+    min-height:100vh;
+    /* Este fondo es de index2.html. 
+      Si prefieres el fondo blanco de index.html, 
+      cámbialo a: background: #fff; 
+    */
+    background: linear-gradient(180deg,var(--bg) 0%, #ffffff 60%);
+    color:var(--muted);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height: 1.5; /* Añadido para consistencia */
+}
+
+/* Estilos de Header de index2.html 
+  (Modificados para que funcionen con los de index.html)
+*/
+header{
+    padding:20px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:transparent;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #111;
+}
+nav a {
+    margin-right: 12px;
+    color: #666;
+    text-decoration: none;
+}
+nav a:last-child {
+    margin-right: 0;
+}
+main{display:flex;flex-direction:column;gap:48px;padding:20px 24px 48px}
+
+/*
+  Ajuste: main de index.html no tiene padding/gap 
+  para que el hero ocupe todo el ancho.
+*/
+main:has(.hero-section) {
+    padding: 0;
+    gap: 0;
+}
+
+section{max-width:1200px;margin:0 auto;width:100%}
+
+/* Ajuste: la sección hero y el footer 
+  deben ocupar todo el ancho (max-width: none) 
+*/
+.hero-section, .site-footer {
+    max-width: none;
+}
+
+
+/* Featured Carousel (Tu estilo original) */
+.featured-carousel{
+    background:linear-gradient(180deg,var(--card), #fffaf0);
+    padding:32px 0;
+    border-radius:var(--radius);
+    box-shadow:0 8px 30px rgba(18,18,18,0.04);
+    overflow:hidden;
+}
+
+/* Ajuste: El carrusel de index.html está dentro de una 
+  sección con padding, así que lo ajustamos 
+*/
+main:has(.hero-section) .featured-carousel {
+    max-width: 1200px;
+    margin: 48px auto; /* Añade espacio después del hero */
+}
+@media (max-width: 1240px) {
+    main:has(.hero-section) .featured-carousel {
+        margin: 48px 24px;
+    }
+}
+
+
+/* Buttons (Tu estilo original) */
+.btn{background:linear-gradient(90deg,var(--accent),#e62b2b);border:none;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer;transition:transform 0.2s; text-decoration: none; display: inline-block; line-height: 1.75rem; text-align: center;}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;border:2px solid var(--accent-2);color:var(--muted)}
+.btn.ghost:hover{background:var(--accent-2);color:var(--muted)}
+
+/* Product Grid (Tu estilo original) */
+.product-grid{padding:0 24px}
+.product-grid h2{color:var(--muted);margin-bottom:32px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:24px}
+.grid-item{
+    background:var(--card);
+    border-radius:var(--radius);
+    overflow:hidden;
+    transition:transform 0.3s;
+    border:1px solid rgba(0,0,0,0.04);
+}
+.grid-item:hover{transform:translateY(-4px)}
+.grid-item img{width:100%;height:220px;object-fit:cover}
+.grid-item-info{padding:20px}
+.grid-item-info h3{margin:0 0 12px;color:var(--muted)}
+.grid-item-info .price{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:16px}
+.grid-item-info .actions{display:flex;gap:8px}
+
+/* Social Media Section (Tu estilo original) */
+.social-section{padding:0 24px}
+.social-section h2{color:var(--muted);margin-bottom:24px;text-align:center}
+.social-grid{
+    display:grid;
+    grid-template-columns:minmax(300px, 2fr) minmax(300px, 1fr);
+    gap:32px;
+    align-items:start;
+}
+
+/* Instagram Feed (Tu estilo original) */
+.instagram-feed{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:0 8px 24px rgba(18,18,18,0.04);
+}
+.instagram-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+    gap:12px;
+    margin:20px 0;
+}
+.instagram-post .caption{
+    position:absolute;
+    left:8px;
+    right:8px;
+    bottom:8px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
+    color:#fff;
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:12px;
+    max-height:48px;
+    overflow:hidden;
+}
+.instagram-post{
+    aspect-ratio:1;
+    border-radius:8px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+    transition:transform 0.3s;
+}
+.instagram-post:hover{
+    transform:scale(1.05);
+}
+.instagram-post img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.instagram-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+}
+.instagram-icon{
+    transition:transform 0.3s;
+}
+.instagram-link:hover .instagram-icon{
+    transform:scale(1.1);
+}
+
+/* News Updates (Tu estilo original) */
+.news-updates{
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:0 8px 24px rgba(18,18,18,0.04);
+}
+.news-items{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+.news-item{
+    background:linear-gradient(135deg, var(--accent-2), var(--accent));
+    border-radius:var(--radius);
+    overflow:hidden;
+}
+.news-content{
+    background:rgba(255,255,255,0.95);
+    padding:24px;
+    width:100%;
+}
+.news-content h3{margin:0 0 8px;color:var(--accent)}
+.news-content p{margin:0 0 16px;color:var(--muted-soft)}
+
+@media (max-width:900px){
+    .social-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* Footer de index2.html */
+footer{max-width:1100px;margin:22px auto 0;padding:24px;color:var(--muted-soft);font-size:14px}
+
+/* Responsive (Tu estilo original) */
+@media (max-width:900px){
+    /* .hero se renombró a .hero-content-container */
+    .hero-content-container{grid-template-columns:1fr;}
+    .product-card img{height:220px}
+}
+@media (max-width:480px){
+    header{padding:18px}
+    .brand .name{display:none}
+}
+
+/* carousel styles (Tu estilo original) */
+.carousel{display:flex;gap:12px;overflow:hidden;padding:0 24px;margin:0 -24px}
+.carousel-track{display:flex;gap:24px;transition:transform 400ms ease}
+.carousel-item{
+    min-width:300px;
+    position:relative;
+    background:transparent;
+    padding:0;
+    border-radius:var(--radius);
+    color:var(--muted);
+    box-shadow:0 8px 24px rgba(18,18,18,0.06);
+    border:1px solid rgba(0,0,0,0.03);
+    transition:transform 0.3s;
+    overflow:hidden;
+}
+.carousel-item:hover{transform:translateY(-4px)}
+.carousel-item img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    display:block;
+}
+.carousel-item .overlay{
+    position:absolute;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    backdrop-filter: blur(4px);
+}
+.carousel-item .overlay h3{margin:0;font-size:16px;font-weight:800;color:#fff}
+
+
+/* ================================================================
+  INICIO: NUEVOS ESTILOS (Añadidos para index.html)
+================================================================
+*/
+
+/* Clases de color personalizadas de index.html */
+.bg-primary-accent {
+    background-color: #009BA6 ;
+}
+.text-primary-accent {
+    color: #009BA6 ;
+}
+.border-primary-accent {
+    border-color: #009BA6 ;
+}
+.bg-soft-background {
+    background-color: #fff7ed;
+}
+.bg-teal-tint {
+    background-color: #f0f9fa;
+}
+
+/* Contenedores genéricos */
+.container-max-width {
+    max-width: 80rem; /* 1280px */
+    margin-left: auto;
+    margin-right: auto;
+}
+.container-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+@media (min-width: 640px) {
+    .container-padding {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+@media (min-width: 1024px) {
+    .container-padding {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Header de index.html */
+.site-header {
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    background-color: #fff;
+    /* Sobrescribe el padding del header de index2.html */
+    padding: 0; 
+}
+.site-nav-container {
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;   /* px-4 */
+    padding-right: 1rem;  /* px-4 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;    /* py-6 */
+    padding-bottom: 1.5rem; /* py-6 */
+}
+@media (min-width: 640px) {
+    .site-nav-container {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+}
+@media (min-width: 1024px) {
+    .site-nav-container {
+        padding-left: 2rem; /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+    }
+}
+
+.logo-container {
+    flex-shrink: 0;
+}
+.logo-img {
+    height: 6.25rem; /* h-25 */
+    width: auto;
+}
+.main-nav-links {
+    display: none;
+    align-items: center;
+}
+.main-nav-links > * + * {
+    margin-left: 1.5rem; /* space-x-6 */
+}
+@media (min-width: 768px) { /* md: */
+    .main-nav-links {
+        display: flex;
+    }
+}
+.nav-link {
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 1.5rem; /* text-2xl */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.nav-link:hover {
+    color: #111827;
+}
+
+/* Sección Hero (index.html) */
+.hero-section {
+    position: relative;
+}
+.hero-bg-image {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+}
+.hero-bg-img-element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    opacity: 0.8;
+}
+.hero-content-container {
+    position: relative;
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;   /* px-4 */
+    padding-right: 1rem;  /* px-4 */
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    padding-top: 6rem;    /* py-24 */
+    padding-bottom: 6rem; /* py-24 */
+}
+@media (min-width: 640px) {
+    .hero-content-container {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+}
+@media (min-width: 1024px) {
+    .hero-content-container {
+        padding-left: 2rem; /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+    }
+}
+@media (min-width: 768px) { /* md: */
+    .hero-content-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.hero-text {
+    text-align: center;
+}
+@media (min-width: 768px) { /* md: */
+    .hero-text {
+        text-align: left;
+    }
+}
+.hero-text h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.25;
+}
+.hero-text p {
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #111827;
+}
+@media (min-width: 768px) { /* md: */
+    .hero-text h1 {
+        font-size: 3rem;
+        line-height: 1;
+    }
+}
+@media (min-width: 1024px) { /* lg: */
+    .hero-text h1 {
+        font-size: 3.75rem;
+        line-height: 1;
+    }
+}
+
+/* Botones del Hero (index.html) */
+.hero-buttons {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+@media (min-width: 640px) { /* sm: */
+    .hero-buttons {
+        flex-direction: row;
+    }
+}
+@media (min-width: 768px) { /* md: */
+    .hero-buttons {
+        justify-content: flex-start;
+    }
+}
+/* Estilos para los botones .btn de index.html
+  que son diferentes de los botones de style.css 
+*/
+.hero-buttons .btn {
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    /* Sobrescribe el fondo de .btn */
+    background: none; 
+}
+.hero-buttons .btn.bg-primary-accent {
+    color: #fff;
+    background-color: #009BA6; /* .bg-primary-accent */
+    transition: opacity 0.2s;
+    border: none;
+}
+.hero-buttons .btn.bg-primary-accent:hover {
+    opacity: 0.9;
+    transform: none; /* Desactiva el :hover de .btn */
+}
+.btn-secondary {
+    background-color: #fff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    transition: background-color 0.2s;
+}
+.btn-secondary:hover {
+    background-color: #f9fafb;
+    transform: none; /* Desactiva el :hover de .btn */
+    color: #1f2937; /* Mantiene el color */
+}
+
+/* Contenedor del Carrusel (index.html) */
+.carousel-container {
+    max-width: 48rem; /* max-w-3xl */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Footer (index.html) */
+.site-footer {
+    background-color: #1f2937;
+    color: #fff;
+    /* Sobrescribe el footer de index2.html */
+    margin: 0;
+    max-width: none;
+}
+.footer-content {
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;   /* px-4 */
+    padding-right: 1rem;  /* px-4 */
+    padding-top: 3rem;    /* py-12 */
+    padding-bottom: 3rem; /* py-12 */
+    text-align: center;
+}
+@media (min-width: 640px) {
+    .footer-content {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+}
+@media (min-width: 1024px) {
+    .footer-content {
+        padding-left: 2rem; /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+    }
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.footer-social-links > * + * {
+    margin-left: 1.5rem;
+}
+.social-link {
+    color: #9ca3af;
+    transition: color 0.2s;
+}
+.social-link:hover {
+    color: #fff;
+}
+.social-link svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* ================================================================
+  FIN: NUEVOS ESTILOS (Añadidos para index.html)
+================================================================
+*/

@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
+from datetime import datetime, timedelta
+import urllib.parse
 
 from .models import Escaparate, Articulo, Reservation
 from django.core.paginator import Paginator, EmptyPage
@@ -129,27 +131,69 @@ def index(request):
     return render(request, "index.html", contexto)
 
 
+
 def reservations(request):
     """Reservation page for massages. Saves reservation to database."""
     message = None
     if request.method == "POST":
-        cliente = request.POST.get("name")
-        fecha = request.POST.get("date")
-        hora = request.POST.get("time")
+        nombre = request.POST.get("name")
+        fecha = request.POST.get("fecha")
+        hora = request.POST.get("hora")
         servicio = request.POST.get("service")
-        # Basic save to DB
+        
         try:
             Reservation.objects.create(
-                name=cliente or "Cliente",
-                date=fecha,
-                time=hora,
-                service=servicio or "Masaje"
+                nombre=nombre or "Cliente",
+                fecha=fecha,
+                hora=hora,
+                servicio=servicio or "Masaje relajante"
             )
-            cliente_display = cliente if cliente else "Cliente"
-            message = f"Reserva confirmada para {cliente_display} - {servicio} el {fecha} a las {hora}"
+            
+            # Generate Google Calendar link
+            start_dt = datetime.strptime(f"{fecha} {hora}", "%Y-%m-%d %H:%M")
+            end_dt = start_dt + timedelta(hours=1)
+            
+            start_str = start_dt.strftime("%Y%m%dT%H%M%S")
+            end_str = end_dt.strftime("%Y%m%dT%H%M%S")
+            
+            base_url = "https://calendar.google.com/calendar/render"
+            params = {
+                "action": "TEMPLATE",
+                "text": f"Masaje en Natursur: {servicio}",
+                "details": f"Reserva de {servicio} realizada en Natursur para {nombre}.",
+                "location": "Natursur, Av. Santa Lucía, 6241500 Alcalá de Guadaíra, Sevilla",
+                "dates": f"{start_str}/{end_str}",
+                "ctz": "Europe/Madrid"
+            }
+            
+            google_link = f"{base_url}?{urllib.parse.urlencode(params)}"
+            
+            return JsonResponse({
+                "success": True, 
+                "message": f"Reserva confirmada para {nombre} - {servicio} el {fecha} a las {hora}",
+                "calendarUrl": google_link
+            })
         except Exception as e:
-            message = f"No se pudo crear la reserva: {e}"
-    return render(request, "reservations.html", {"message": message})
+            return JsonResponse({"success": False, "message": f"No se pudo crear la reserva: {e}"})
+    
+    return render(request, "reservations.html")
+
+def get_reservations(request):
+    """API endpoint to get all reservations for the calendar."""
+    reservations = Reservation.objects.all().values('fecha', 'hora')
+    
+    # Group reservations by date
+    reservas_dict = {}
+    for res in reservations:
+        fecha_str = res['fecha'].strftime('%Y-%m-%d')
+        hora_str = res['hora'].strftime('%H:%M')
+        
+        if fecha_str not in reservas_dict:
+            reservas_dict[fecha_str] = []
+        reservas_dict[fecha_str].append(hora_str)
+    
+    return JsonResponse(reservas_dict)
+
 
 
 def contact(request):
@@ -195,10 +239,17 @@ def catalog(request):
 
 
 def products_api(request):
-    """API endpoint returning JSON list of products for infinite scroll."""
+    """API endpoint returning JSON list of products for infinite scroll, supports search."""
     page = int(request.GET.get('page', '1'))
     per_page = int(request.GET.get('per_page', '12'))
-    qs = Articulo.objects.all().order_by('id')
+    search = request.GET.get('search', '').strip()  # Tomamos la búsqueda
+
+    # Filtrado: si hay texto en search, filtramos por nombre que contenga la cadena (case-insensitive)
+    if search:
+        qs = Articulo.objects.filter(nombre__icontains=search).order_by('id')
+    else:
+        qs = Articulo.objects.all().order_by('id')
+
     paginator = Paginator(qs, per_page)
     try:
         pg = paginator.get_page(page)
@@ -216,7 +267,12 @@ def products_api(request):
             "detail_url": reverse('product_detail', args=[p.id]),
         })
 
-    return JsonResponse({"products": products, "has_next": pg.has_next(), "next_page": pg.next_page_number() if pg.has_next() else None})
+    return JsonResponse({
+        "products": products,
+        "has_next": pg.has_next(),
+        "next_page": pg.next_page_number() if pg.has_next() else None
+    })
+
 
 def reservar(request):
     return render(request, "reservas/reservartions.html")
@@ -227,7 +283,7 @@ def crear_reserva(request):
         fecha = request.POST["fecha"]
         hora = request.POST["hora"]
         Reservation.objects.create(nombre=nombre, fecha=fecha, hora=hora)
-        return render(request, "reservas/reservations.html", {"message": "¡Reserva creada con éxito!"})
+        return render(request, "reservations.html", {"message": "¡Reserva creada con éxito!"})
     return redirect("reservar")
 
 def available_slots(request):

@@ -1,0 +1,500 @@
+/* --- NUEVO: Variables de :root (de style.css) --- */
+:root {
+    --card: #f0f9fa; /* card background */
+    --radius: 12px;
+}
+
+/* --- Fuente Base y Colores Personalizados (Originales) --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #fff; /* from bg-white */
+    color: #1f2937; /* from text-gray-800 */
+    margin: 0;
+    line-height: 1.5;
+}
+
+.bg-primary-accent {
+    background-color: #009BA6 ;
+}
+.text-primary-accent {
+    color: #009BA6 ;
+}
+.border-primary-accent {
+    border-color: #009BA6 ;
+}
+.bg-soft-background {
+    background-color: #f0f9fa;
+}
+.bg-teal-tint {
+    background-color: #f0f9fa;
+}
+
+/* --- Estilos del Carrusel (MODIFICADOS) --- */
+/* --- MODIFICADO: .featured-carousel ahora usa el gradiente de style.css y no tiene padding vertical --- */
+.featured-carousel{
+    background: linear-gradient(180deg, var(--card), #f0f9fa);
+    padding: 32px 0; /* Mantenemos el padding original de style.css para el contenedor */
+    border-radius: var(--radius);
+    box-shadow: 0 8px 30px rgba(18, 18, 18, 0.04);
+    overflow: hidden;
+    /* --- NUEVO: Se aplica el max-width aquí --- */
+    max-width: 80rem; /* 768px, or max-w-3xl */
+    margin-left: auto;
+    margin-right: auto;
+}
+.carousel{display:flex;gap:12px;overflow:hidden;padding:0 24px;margin:0 -24px}
+.carousel-track{display:flex;gap:24px;transition:transform 400ms ease}
+.carousel-item{
+    min-width:300px;
+    position:relative;
+    background:#ffffff;
+    padding:0;
+    border-radius:var(--radius);
+    color:var(--muted);
+    box-shadow:0 8px 24px rgba(18,18,18,0.06);
+    border:1px solid rgba(0,0,0,0.03);
+    transition:transform 0.3s;
+    overflow:hidden;
+}
+.carousel-item:hover{transform:translateY(-4px)}
+.carousel-item img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    display:block;
+}
+.carousel-item .overlay{
+    position:absolute;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    backdrop-filter: blur(4px);
+}
+.carousel-item .overlay h3{margin:0;font-size:16px;font-weight:800;color:#fff}
+    /* --- MODIFICADO: .carousel-wrapper ya no es necesario, el max-width está en .featured-carousel --- */
+/* .carousel-wrapper { ... } */
+
+/* --- NUEVO: Wrapper para la sección del carrusel --- */
+.carousel-section-wrapper {
+    background-image: var(--carousel-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+@media (min-width: 640px) {
+    .carousel-section-wrapper {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+    @media (min-width: 1024px) {
+    .carousel-section-wrapper {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+/* --- NUEVOS ESTILOS (Traducción de Tailwind) --- */
+
+/* Utilidades de Contenedor */
+.container-max-width {
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto;
+    margin-right: auto;
+}
+.container-padding {
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+}
+@media (min-width: 640px) {
+    .container-padding {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+}
+@media (min-width: 1024px) {
+    .container-padding {
+        padding-left: 2rem; /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+    }
+}
+
+/* Header y Navegación — MÁS FINO */
+header {
+    background-color: #171717;
+}
+
+/* Reducimos padding del nav */
+.nav-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;  /* antes 1.5rem */
+    padding-bottom: 1rem;
+}
+
+
+/* Logo más pequeño y fino */
+.logo-img {
+    height: 5.5rem; /* antes 6.25rem */
+    width: auto;
+}
+.logo-text {
+    font-weight: 800;      /* negrita */
+    font-size: 1.75rem;    /* tamaño del texto */
+    color: rgb(255, 255, 255);          /* color blanco */
+    text-decoration: none; /* quitar subrayado */
+    line-height: 1;        /* no empuja la barra */
+    display: flex;
+    align-items: center;
+}
+/* Nav links más discretos */
+.nav-links {
+    display: none;
+    align-items: center;
+}
+.nav-links > * + * {
+    margin-left: 1rem; /* antes 1.5rem */
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+}
+
+/* Texto más fino y pequeño */
+.nav-link {
+    font-weight: 500;
+    color: #e5e5e5;
+    font-size: 1rem; /* antes 1.5rem */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.nav-link:hover {
+    color: #ffffff;
+}
+
+
+/* Sección Hero */
+.hero-section {
+    position: relative;
+}
+.hero-bg-image {
+    position: absolute;
+    top: 0;
+    right: 0; /* se mantiene a la derecha */
+    width: 50%; /* mitad derecha */
+    height: 100%;
+    overflow: hidden;
+}
+
+.hero-bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0; /* pegado a la izquierda */
+    width: 50%; /* mitad izquierda */
+    height: 100%;
+    background: #11454a; /* el color que quieras */
+    opacity: 1; /* evita transparencias */
+}
+
+.hero-content {
+    position: relative; /* relative */
+    display: grid;
+    gap: 3rem; /* gap-12 */
+    align-items: center;
+    padding-top: 6rem; /* py-24 */
+    padding-bottom: 6rem; /* py-24 */
+}
+@media (min-width: 768px) { /* md: */
+    .hero-content {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
+    }
+}
+
+.hero-text {
+    text-align: center; /* text-center */
+    color: #ffffff; 
+}
+@media (min-width: 768px) { /* md: */
+    .hero-text {
+        text-align: left; /* md:text-left */
+    }
+}
+.hero-text h1 {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700; /* font-extrabold */
+    color: #ffffff; /* text-gray-900 */
+    line-height: 1.25; /* leading-tight */
+    justify-content: flex-start; 
+}
+.hero-text p {
+    margin-top: 1.5rem; /* mt-6 */
+    font-size: 1.125rem; /* text-lg */
+    line-height: 1.75rem;
+    color: #ffffff; /* text-gray-900 */
+    justify-content: flex-start; 
+}
+@media (min-width: 768px) { /* md: */
+    .hero-text h1 {
+        font-size: 3rem; /* md:text-5xl */
+        line-height: 1;
+    }
+}
+@media (min-width: 1024px) { /* lg: */
+    .hero-text h1 {
+        font-size: 3.75rem; /* lg:text-6xl */
+        line-height: 1;
+    }
+}
+
+
+
+/* Botones del Hero */
+.hero-buttons {
+    margin-top: 2.5rem; /* mt-10 */
+    display: flex;
+    flex-direction: column; /* flex-col */
+    justify-content: center; /* justify-center */
+    gap: 1rem; /* gap-4 */
+    align-items: center;    
+}
+@media (min-width: 640px) { /* sm: */
+    .hero-buttons {
+        flex-direction: row; /* sm:flex-row */
+
+    }
+}
+@media (min-width: 768px) { /* md: */
+    .hero-buttons {
+        justify-content: flex-start; /* md:justify-start */
+    }
+}
+.btn {
+    display: inline-block;
+    padding: 0.75rem 2rem; /* px-8 py-3 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600; /* font-semibold */
+    font-size: 1.125rem; /* text-lg */
+    line-height: 1.75rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+    text-decoration: none;
+    text-align: center;
+}
+.btn-primary {
+    background-color: #ffc802;
+    color: #ffffff; /* text-white */
+    transition: opacity 0.2s; /* transition-opacity */
+}
+.btn-primary:hover {
+    background-color: #f9fafb4a; /* hover:opacity-90 */
+}
+.btn-secondary {
+    background-color: #fff; /* bg-white */
+    color: #ffffff; /* text-gray-800 */
+    border: 1px solid #e5e7eb; /* border border-gray-200 */
+    transition: background-color 0.2s; /* transition-colors */
+}
+.btn-secondary:hover {
+    background-color: #f9fafb4a; /* hover:bg-gray-50 */
+}
+
+
+
+
+/* Footer */
+footer {
+    background-color:#11454a; /* bg-gray-800 */
+    color: #fff; /* text-white */
+}
+.footer-content {
+    padding-top: 3rem; /* py-12 */
+    padding-bottom: 3rem; /* py-12 */
+    text-align: center;
+}
+.social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem; /* mt-4 */
+}
+.social-links > * + * {
+    margin-left: 1.5rem; /* space-x-6 */
+}
+.social-link {
+    color: #9ca3af; /* text-gray-400 */
+    transition: color 0.2s;
+}
+.social-link:hover {
+    color: #fff; /* hover:text-white */
+}
+/* Estilo para el ícono de lucide */
+.social-link svg {
+    width: 1.5rem; /* w-6 */
+    height: 1.5rem; /* h-6 */
+}
+/* --- NUEVO: Estilos para Cabecera de Sección (Productos) --- */
+
+.section-header {
+    text-align: center; /* Centra el texto */
+    margin-bottom: 2.5rem; /* 40px, espacio antes del carrusel */
+    /* max-width y padding ya vienen de .container-max-width y .container-padding */
+}
+
+.section-title {
+    font-size: 2.25rem; /* 36px, similar a text-4xl */
+    font-weight: 800; /* font-extrabold */
+    color: #111827; /* text-gray-900 */
+    line-height: 1.25;
+    margin: 0;
+}
+
+.section-subtitle {
+    margin-top: 1rem; /* 16px */
+    font-size: 1.125rem; /* 18px, text-lg */
+    color: #4b5563; /* text-gray-600 */
+    max-width: 42rem; /* max-w-2xl, para que no sea demasiado ancho */
+    margin-left: auto;
+    margin-right: auto; /* Centra el párrafo si es más estrecho */
+}
+
+.btn-link {
+    display: inline-flex; /* Para alinear texto e icono */
+    align-items: center;
+    gap: 0.5rem; /* 8px, espacio entre texto e icono */
+    margin-top: 1.5rem; /* 24px */
+    font-size: 1rem; /* 16px, text-base */
+    font-weight: 600; /* font-semibold */
+    color: #009BA6; /* text-primary-accent */
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-link:hover {
+    color: #1f2937; /* text-gray-800 */
+    gap: 0.75rem; /* Aumenta el 'gap' en hover para un efecto sutil */
+}
+
+.btn-link .btn-link-icon {
+    width: 1.125rem; /* 18px */
+    height: 1.125rem; /* 18px */
+    transition: transform 0.2s ease; /* Transición para el movimiento */
+}
+
+.btn-link:hover .btn-link-icon {
+    transform: translateX(4px); /* Mueve el icono a la derecha en hover */
+}
+
+/* --- NUEVO: Sección de Redes Sociales --- */
+
+.social-follow-section {
+    /* Mantenemos el mismo padding que la sección del carrusel para consistencia */
+    background-color: #fff; 
+    padding-top: 4rem;    /* 64px */
+    padding-bottom: 4rem; /* 64px */
+}
+
+.social-follow-content {
+    display: flex;
+    flex-direction: column; /* Apilado en móvil por defecto */
+    align-items: center;
+    text-align: center;
+    gap: 3rem; /* Espacio entre imagen y texto */
+}
+
+.social-image-wrapper {
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+.social-image-circular {
+    width: 300px;  /* Tamaño de la imagen circular (puedes ajustarlo) */
+    height: 300px; /* Debe ser igual al width */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsión */
+    border-radius: 50%; /* La clave para la imagen circular */
+    border: 4px solid #fff; /* Borde blanco sutil */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra profesional */
+}
+
+.social-text-wrapper {
+    flex-grow: 1; /* El texto ocupa el espacio restante */
+}
+
+/* Reutilizamos las clases .section-title y .section-subtitle 
+  que ya definiste, así que no necesitamos re-estilizarlas, 
+  solo ajustar su alineación en el modo responsive de abajo.
+*/
+
+.social-icons-list {
+    display: flex;
+    justify-content: center; /* Centra los iconos en móvil */
+    gap: 1.5rem; /* 24px */
+    margin-top: 2rem; /* 32px */
+}
+
+.social-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;  /* 3.5rem - Un buen tamaño para "clickear" */
+    height: 70px; /* 3.5rem */
+    /* Usamos los colores de tu paleta */
+    background-color: var(--card, #f0f9fa); 
+    color: #009BA6; /* Tu color --text-primary-accent */
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.social-icon-link svg {
+    width: 30px; /* 1.75rem */
+    height: 30px;
+}
+
+.social-icon-link:hover {
+    background-color: #009BA6; /* Tu color --bg-primary-accent */
+    color: #fff; /* Texto blanco al pasar el ratón */
+    transform: translateY(-4px); /* Efecto de elevación sutil */
+    /* Sombra con el color de acento */
+    box-shadow: 0 8px 16px rgba(0, 155, 166, 0.2);
+}
+
+/* --- Responsive para la nueva sección --- */
+@media (min-width: 768px) { /* El breakpoint 'md' que usas en otras secciones */
+    .social-follow-content {
+        flex-direction: row; /* Lado a lado en escritorio */
+        text-align: left;
+        gap: 4rem; /* Más espacio en escritorio */
+    }
+
+    /* Estos estilos anulan los estilos centrados de 
+      .section-header que reutilizamos en el HTML.
+    */
+    .social-text-wrapper .section-title {
+        text-align: left; 
+    }
+    .social-text-wrapper .section-subtitle {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+    }
+
+    .social-icons-list {
+        justify-content: flex-start; /* Alinea iconos a la izquierda en escritorio */
+    }
+}
