@@ -23,36 +23,48 @@ body{
     background-color: #ffffff;
     color:var(--muted);
 }
+
+/* Header matching index.html */
 header {
-    padding:20px 32px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);
-    width:100%;
-    box-sizing:border-box;
-    box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    background-color: #171717;
+    padding: 0;
 }
-.brand {
+
+.nav-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 1.75rem;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    line-height: 1;
     display: flex;
     align-items: center;
-    gap: 12px;
 }
-nav {
+
+.nav-links {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 1rem;
 }
-nav a {
-    padding:8px 16px;
-    color:#e5e5e5;
-    text-decoration:none;
-    border-radius:6px;
-    transition:all 0.3s ease;
-    font-weight:500;
-    font-size:14px;
+
+.nav-link {
+    font-weight: 500;
+    color: #e5e5e5;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
 }
-nav a:hover {
-    color:var(--accent);
+
+.nav-link:hover {
+    color: #ffffff;
 }
 
 .container{
@@ -106,18 +118,19 @@ a.btn{
 
 <body>
   <header>
-    <div class="brand">
-      <div class="name">
-        <div style="font-weight: 800; font-size: 1.75rem; color: rgb(255, 255, 255); line-height: 1; display: flex; align-items: center">NATURSUR</div>
+    <nav class="nav-main">
+      <div class="logo-container">
+        <a href="{% url 'home' %}" class="logo-text">
+          NATURSUR
+        </a>
       </div>
-    </div>
-    <nav>
-        <a href="{% url 'home' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Inicio</a>
-        <a href="{% url 'catalog' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Catálogo</a>
-        <a href="{% url 'reservations' %}" style="margin-right:12px;color:#e5e5e5;text-decoration:none">Masajes</a>
-        <a href="{% url 'contact' %}" style="color:#e5e5e5;text-decoration:none">Contacto</a>
-    </nav>
-  </header>
+      
+      <div class="nav-links">
+        <a href="{% url 'home' %}" class="nav-link">Inicio</a>
+        <a href="{% url 'catalog' %}" class="nav-link">Catálogo</a>
+        <a href="{% url 'reservations' %}" class="nav-link">Masajes</a>
+        <a href="{% url 'contact' %}" class="nav-link">Contacto</a>
+      </div>
     </nav>
   </header>
 
