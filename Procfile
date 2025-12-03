@@ -1,1 +1,1 @@
-web: gunicorn tienda_virtual.wsgi:application
+web: gunicorn tienda_virtual.tienda_virtual.wsgi:application
