@@ -81,7 +81,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "tienda_virtual.wsgi.application"
+# 🚨 CORRECCIÓN CLAVE: Debe reflejar la estructura anidada del proyecto (tienda_virtual/tienda_virtual)
+WSGI_APPLICATION = "tienda_virtual.tienda_virtual.wsgi.application"
 
 
 # Database
